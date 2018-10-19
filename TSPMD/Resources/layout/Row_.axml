@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewRow_"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:singleLine="true" />
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
+        android:layout_marginLeft="20dp"
+        android:singleLine="true"
+        android:gravity="right"
+        android:id="@+id/textViewDuration_"
+        android:textColor="#ff05659f"
+        android:textStyle="bold" />
+    <Button
+        android:text="Play"
+        android:layout_width="75dp"
+        android:id="@+id/buttonRowPlay_"
+        android:layout_marginTop="25dp"
+        android:layout_gravity="right"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="80dp"
+        android:layout_alignParentRight="true" />
+    <Button
+        android:text="Delete"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonRowDelete"
+        android:layout_toLeftOf="@id/buttonRowPlay_"
+        android:layout_alignTop="@id/buttonRowPlay_"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentRight="true" />
+</RelativeLayout>

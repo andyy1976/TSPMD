@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:title="Menu">
+    <menu>
+      <item
+        android:icon="@drawable/Search"
+				android:title="Search"
+				android:id="@+id/nav_search" />
+    <item
+        android:icon="@drawable/Folder"
+				android:title="Files"
+				android:id="@+id/nav_files" />
+    </menu>
+  </item>
+</menu>

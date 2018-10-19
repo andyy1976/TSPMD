@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, Click Me!</string>
-    <string name="app_name">TSPMD</string>
+	<string name="open_drawer">Open</string>
+    <string name="close_drawer">Close</string>
+	<string name="app_name">The Simple Pocket Media Downloader</string>
 </resources>

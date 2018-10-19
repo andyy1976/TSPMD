@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:id="@+id/mainView">
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:id="@+id/adView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_gravity="top"
+        android:layout_marginTop="110dp"
+        android:alpha="0"
+        android:background="#ff000000" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextSearch"
+        android:singleLine="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="90dp"
+        android:layout_marginLeft="5dp" />
+    <Button
+        android:text="Search"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonSearch"
+        android:layout_toLeftOf="@id/editTextSearch"
+        android:layout_alignTop="@id/editTextSearch"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentRight="true" />
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+        <Button
+            android:text="Stop"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonStop"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="1dp" />
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:id="@+id/seekBarPlayer"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="5dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="79dp"
+            android:id="@+id/textViewPlaying"
+            android:textColor="#ff05659f"
+            android:singleLine="true" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+        <ListView
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="170dp"
+            android:layout_marginBottom="51dp"
+            android:id="@+id/listViewResult" />
+    </LinearLayout>
+</RelativeLayout>
