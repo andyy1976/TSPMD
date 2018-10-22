@@ -62,7 +62,7 @@ namespace TSPMD
 
             ActivityContext.mActivity = this;
 
-            var SearchFragment = new Search();
+            var SearchFragment = new SearchFragment();
             var fragmentSearch = FragmentManager.BeginTransaction();
             fragmentSearch.Replace(Resource.Id.fragment_container, SearchFragment);
             fragmentSearch.AddToBackStack(null);
@@ -74,7 +74,7 @@ namespace TSPMD
             switch (e.MenuItem.ItemId)
             {
                 case (Resource.Id.nav_search):
-                    var SearchFragment = new Search();
+                    var SearchFragment = new SearchFragment();
                     var fragmentSearch = FragmentManager.BeginTransaction();
                     fragmentSearch.Replace(Resource.Id.fragment_container, SearchFragment);
                     fragmentSearch.AddToBackStack(null);
@@ -84,7 +84,7 @@ namespace TSPMD
 
                     break;
                 case (Resource.Id.nav_files):
-                    var MusicFragment = new Files();
+                    var MusicFragment = new FilesFragment();
                     var fragmentMusic = FragmentManager.BeginTransaction();
                     fragmentMusic.Replace(Resource.Id.fragment_container, MusicFragment);
                     fragmentMusic.AddToBackStack(null);

@@ -23,40 +23,31 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading;
-using System.Text;
-using System.Text.RegularExpressions;
 
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Support.Design.Widget;
-using Android.Support.V4.Widget;
-using Android.Support.V7.App;
 using Android.Views;
 using Android.Views.InputMethods;
-using Android.Webkit;
 using Android.Widget;
 
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
-
-using Square.Picasso;
 
 namespace TSPMD
 {
     /// <summary>
     /// Search fragment
     /// </summary>
-    public class Search : Fragment, SeekBar.IOnSeekBarChangeListener
+    public class SearchFragment : Fragment, SeekBar.IOnSeekBarChangeListener
     {
-        private List<Information> items = null;
+        private List<ListViewItem> items = null;
         private ListView listView;
-        ListViewAdapter adapter;
+        SearchListViewAdapter adapter;
         public TextView textView;
         public SeekBar seekBar;
         public Spinner spinner;
@@ -78,12 +69,7 @@ namespace TSPMD
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            ///////////////////////////////////////////////////////////////////////////////
-            /// 
-            /// UI
-            /// 
-            ///////////////////////////////////////////////////////////////////////////////
-
+            /* UI */
             var view = inflater.Inflate(Resource.Layout.Search, container, false);
 
             this.view = view;
@@ -111,10 +97,10 @@ namespace TSPMD
             ActivityContext.mActivity.Window.SetFlags(WindowManagerFlags.KeepScreenOn, WindowManagerFlags.KeepScreenOn);
 
             if (items == null)
-                items = new List<Information>();
+                items = new List<ListViewItem>();
 
             if (adapter == null)
-                adapter = new ListViewAdapter(ActivityContext.mActivity, items, this);
+                adapter = new SearchListViewAdapter(ActivityContext.mActivity, items, this);
 
             listView.Adapter = adapter;
 
@@ -408,6 +394,8 @@ namespace TSPMD
             }
         }
 
+        #region Download
+
         /// <summary>
         /// Download
         /// </summary>
@@ -499,7 +487,7 @@ namespace TSPMD
             if (mediaUrl != null && mediaTitle != null)
             {
                 // Start download video file
-                dlf(mediaUrl, mediaTitle);
+                DownloadFile(mediaUrl, mediaTitle, isVideo);
 
 #if DEBUG
                 Console.WriteLine("Start download");
@@ -515,8 +503,13 @@ namespace TSPMD
             }
         }
 
-        // Download video file
-        private void dlf(string URL, string Title)
+        /// <summary>
+        /// Download file
+        /// </summary>
+        /// <param name="URL"></param>
+        /// <param name="Title"></param>
+        /// <param name="isVideo"></param>
+        private void DownloadFile(string URL, string Title, bool isVideo)
         {
             WebClient DownloadFile = new WebClient();
 
@@ -541,11 +534,24 @@ namespace TSPMD
             }
             catch { }
 
-            var file = Path.Combine(directory.AbsolutePath, makeFilenameValid(Title).Replace("/", "")
-                                    .Replace(".", "")
-                                    .Replace("|", "")
-                                    .Replace("?", "")
-                                    .Replace("!", "") + ".m4a");
+            string file = string.Empty;
+            if (isVideo)
+            {
+                file = Path.Combine(directory.AbsolutePath, makeFilenameValid(Title).Replace("/", "")
+                    .Replace(".", "")
+                    .Replace("|", "")
+                    .Replace("?", "")
+                    .Replace("!", "") + ".mp4");
+            }
+            else
+            {
+                file = Path.Combine(directory.AbsolutePath, makeFilenameValid(Title).Replace("/", "")
+                    .Replace(".", "")
+                    .Replace("|", "")
+                    .Replace("?", "")
+                    .Replace("!", "") + ".m4a");
+            }
+            
 
 #if DEBUG
             Console.WriteLine(file);
@@ -558,7 +564,12 @@ namespace TSPMD
 #endif
         }
 
-        // Download video file completed
+        /// <summary>
+        /// Download progress
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <param name="builder_"></param>
         private void DownloadFileProgressChanged(object sender, DownloadProgressChangedEventArgs e, Notification.Builder builder_)
         {
             // Progress
@@ -583,7 +594,11 @@ namespace TSPMD
 #endif
         }
 
-        // Download file completed
+        /// <summary>
+        /// Download file completed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             // Split arguments
@@ -592,13 +607,13 @@ namespace TSPMD
             string[] s_ = s.Split(new char[] { '|' });
 
             // Directory
-            var directory = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryMusic);
+            var directory = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads);
 
             // File
-            string m4afile = s_[0];
+            string mediaFile = s_[0];
 
             // Filename
-            var filename = m4afile.Replace(Convert.ToString(directory), "").Replace("/", "");
+            var filename = mediaFile.Replace(Convert.ToString(directory), "").Replace("/", "");
 
             // Write m4a tags
             try
@@ -618,7 +633,7 @@ namespace TSPMD
                             title += s__;
                     }
 
-                    title = title.TrimStart().TrimEnd().Replace(".m4a", "");
+                    title = title.TrimStart().TrimEnd().Replace(".m4a", "").Replace(".mp4", "");
                 }
                 else
                 {
@@ -634,7 +649,7 @@ namespace TSPMD
                                 title += s__ + " ";
                         }
 
-                        title = title.TrimStart().TrimEnd().Replace(".m4a", "");
+                        title = title.TrimStart().TrimEnd().Replace(".m4a", "").Replace(".mp4", "");
                     }
                     else
                     {
@@ -643,7 +658,7 @@ namespace TSPMD
                     }
                 }
 
-                TagLib.File file = TagLib.File.Create(m4afile);
+                TagLib.File file = TagLib.File.Create(mediaFile);
 
                 file.Tag.Performers = new string[] { performer };
                 file.Tag.Title = title;
@@ -651,13 +666,13 @@ namespace TSPMD
                 file.Save();
 
 #if DEBUG
-                Console.WriteLine("m4a tags written");
+                Console.WriteLine("Tags written");
 #endif
             }
             catch
             {
 #if DEBUG
-                Console.WriteLine("failed to write m4a tags");
+                Console.WriteLine("Failed to write tags");
 #endif
             }
 
@@ -675,7 +690,13 @@ namespace TSPMD
 #endif
         }
 
-        // Remove invalid characters from filename
+        #endregion Download
+
+        /// <summary>
+        /// Remove invalid characters from filename
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         private string makeFilenameValid(string file)
         {
             char replacementChar = '_';
@@ -712,12 +733,21 @@ namespace TSPMD
         }
     }
 
+    #region Search
+
     /// <summary>
     /// Perform search
     /// </summary>
     public static class SEARCH
     {
-        public static bool DO(string value, string tube, List<Information> items)
+        /// <summary>
+        /// Search
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="tube"></param>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public static bool DO(string value, string tube, List<ListViewItem> items)
         {
             try
             {
@@ -729,7 +759,7 @@ namespace TSPMD
                         foreach (var item in ytitems)
                         {
                             // Add values
-                            items.Add(new Information()
+                            items.Add(new ListViewItem()
                             {
                                 Title = item.getTitle(),
                                 Author = item.getAuthor(),
@@ -745,7 +775,7 @@ namespace TSPMD
                         foreach (var item in ccitems)
                         {
                             // Add values
-                            items.Add(new Information()
+                            items.Add(new ListViewItem()
                             {
                                 Title = item.getTitle(),
                                 Author = item.getAuthor(),
@@ -759,7 +789,7 @@ namespace TSPMD
                         foreach (var item in dmitems)
                         {
                             // Add values
-                            items.Add(new Information()
+                            items.Add(new ListViewItem()
                             {
                                 Title = item.getTitle(),
                                 Author = item.getAuthor(),
@@ -773,7 +803,7 @@ namespace TSPMD
                         foreach (var item in epitems)
                         {
                             // Add values
-                            items.Add(new Information()
+                            items.Add(new ListViewItem()
                             {
                                 Title = item.getTitle(),
                                 Url = item.getUrl(),
@@ -788,7 +818,7 @@ namespace TSPMD
                         foreach (var item in phitems)
                         {
                             // Add values
-                            items.Add(new Information()
+                            items.Add(new ListViewItem()
                             {
                                 Title = item.getTitle(),
                                 Url = item.getUrl(),
@@ -803,7 +833,7 @@ namespace TSPMD
                         foreach (var item in vmitems)
                         {
                             // Add values
-                            items.Add(new Information()
+                            items.Add(new ListViewItem()
                             {
                                 Title = item.getTitle(),
                                 Author = item.getAuthor(),
@@ -819,7 +849,7 @@ namespace TSPMD
                         foreach (var item in xhitems)
                         {
                             // Add values
-                            items.Add(new Information()
+                            items.Add(new ListViewItem()
                             {
                                 Title = item.getTitle(),
                                 Url = item.getUrl(),
@@ -849,4 +879,6 @@ namespace TSPMD
             }
         }
     }
+
+    #endregion Search
 }

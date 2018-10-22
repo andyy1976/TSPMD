@@ -51,22 +51,22 @@ namespace TSPMD
 {
     /// <summary>
     /// List view adapter
-    /// Search fragment
+    /// Files fragment
     /// </summary>
-    class ListViewAdapter : BaseAdapter<Information>
+    class FilesListViewAdapter : BaseAdapter<ListViewItem>
     {
-        private List<Information> items_;
+        private List<ListViewItem> items_;
         private Context context_;
-        private Search searchActivity_;
+        private FilesFragment filesActivity_;
         private Android.Media.MediaPlayer mp;
         private Handler mpHandler;
         private Action mpAction;
 
-        public ListViewAdapter(Context context, List<Information> items, Search searchActivity)
+        public FilesListViewAdapter(Context context, List<ListViewItem> items, FilesFragment filesActivity)
         {
             items_ = items;
             context_ = context;
-            searchActivity_ = searchActivity;
+            filesActivity_ = filesActivity;
         }
 
         public override int Count
@@ -77,7 +77,7 @@ namespace TSPMD
             }
         }
 
-        public override Information this[int position]
+        public override ListViewItem this[int position]
         {
             get { return items_[position]; }
         }
@@ -108,150 +108,52 @@ namespace TSPMD
 
             if (row == null)
             {
-                row = LayoutInflater.From(context_).Inflate(Resource.Layout.Row, null, false);
+                row = LayoutInflater.From(context_).Inflate(Resource.Layout.FilesRow, null, false);
             }
 
             // Title
-            TextView txtTitle = row.FindViewById<TextView>(Resource.Id.textViewRow);
+            TextView txtTitle = row.FindViewById<TextView>(Resource.Id.textViewRow_);
             txtTitle.Text = items_[position].Title;
 
             // Url
             string valueUrl = items_[position].Url;
 
-            // Thumbnail
-            ImageView imageView = row.FindViewById<ImageView>(Resource.Id.imageView);
-
-            // Author
-            TextView txtAuthor = row.FindViewById<TextView>(Resource.Id.textViewRowAuthor);
-            txtAuthor.Text = items_[position].Author;
-
-            try
-            {
-                Picasso.With(this.context_).Load(items_[position].Thumbnail).Into(imageView);
-            }
-            catch
-            {
-            }
-
             // Duration
-            TextView txtDuration = row.FindViewById<TextView>(Resource.Id.textViewDuration);
+            TextView txtDuration = row.FindViewById<TextView>(Resource.Id.textViewDuration_);
             txtDuration.Text = items_[position].Duration;
 
             // Play
-            Button buttonPlay = row.FindViewById<Button>(Resource.Id.buttonRowPlay);
+            Button buttonPlay = row.FindViewById<Button>(Resource.Id.buttonRowPlay_);
 
             var localPlay = new LocalOnclickListener();
 
             localPlay.HandleOnClick = () =>
             {
-                Thread thread = new Thread(() => play(valueUrl, txtTitle.Text, position));
+                Thread thread = new Thread(() => play(valueUrl, position));
                 thread.Start();
             };
 
             buttonPlay.SetOnClickListener(localPlay);
 
-            // Download
-            Button buttonDownload = row.FindViewById<Button>(Resource.Id.buttonRowDownload);
+            // Delete
+            Button buttonDelete = row.FindViewById<Button>(Resource.Id.buttonRowDelete);
 
-            var localDownload = new LocalOnclickListener();
+            var localDelete = new LocalOnclickListener();
 
-            localDownload.HandleOnClick = () =>
+            localDelete.HandleOnClick = () =>
             {
-                ActivityContext.mActivity.RunOnUiThread(delegate
-                {
-                    if (valueUrl.Contains("www.youtube"))
-                    {
-                        ActivityContext.mActivity.RunOnUiThread(delegate
-                        {
-                            new Android.Support.V7.App.AlertDialog.Builder(ActivityContext.mActivity)
-                                           .SetPositiveButton("Audio", (sender, e) =>
-                                           {
-                                               Thread thread = new Thread(() => searchActivity_.Download(txtTitle.Text, valueUrl, false));
-                                               thread.Start();
-                                           })
-                                           .SetNegativeButton("Video", (sender, e) =>
-                                           {
-                                               Thread thread = new Thread(() => searchActivity_.Download(txtTitle.Text, valueUrl, true));
-                                               thread.Start();
-                                           })
-                                           .SetTitle(txtTitle.Text)
-                                           .SetIcon(Resource.Drawable.Icon)
-                                           .Show();
-                        });
-                    }
-                    else if (valueUrl.Contains("www.ccmixter"))
-                    {
-                        Thread thread = new Thread(() => searchActivity_.Download(txtTitle.Text, valueUrl, false));
-                        thread.Start();
-                    }
-                    else
-                    {
-                        Thread thread = new Thread(() => searchActivity_.Download(txtTitle.Text, valueUrl, true));
-                        thread.Start();
-                    }  
-                });
+                File.Delete(valueUrl);
+                ActivityContext.mActivity.RunOnUiThread(() => filesActivity_.loadAsync());
             };
 
-            buttonDownload.SetOnClickListener(localDownload);
+            buttonDelete.SetOnClickListener(localDelete);
 
             return row;
         }
 
-        private void play(string valueUrl, string title, int position)
+        private void play(string valueUrl, int position)
         {
-            string threegpurl = "";
-
-            threegpurl = threegp(valueUrl);
-
-            if (String.IsNullOrEmpty(threegpurl))
-            {
-#if DEBUG
-                Console.WriteLine("File not found", title);
-#endif
-                searchActivity_.publishnotification("File not found", title, searchActivity_.uniquenotificationID());
-            }
-            else
-                mediaplayer(threegpurl, position);
-        }
-
-        private string threegp(string url)
-        {
-            ///////////////////////////////////////////////////////////////////////////////
-            /// 
-            /// 3gp video cx 
-            /// 
-            ///////////////////////////////////////////////////////////////////////////////
-
-            // URL
-            string threegpurl = "";
-
-            try
-            {
-                IEnumerable<VideoInfo> videoInfos = DownloadUrlResolver.GetDownloadUrls(url, false);
-
-                VideoInfo video = videoInfos
-                    .First(info => info.VideoType == VideoType.Mobile);
-
-                if (video.RequiresDecryption)
-                {
-                    DownloadUrlResolver.DecryptDownloadUrl(video);
-                }
-
-                threegpurl = video.DownloadUrl;
-
-#if DEBUG
-                Console.WriteLine(threegpurl);
-#endif
-
-                if (string.IsNullOrEmpty(threegpurl))
-                    return "";
-                else
-                    return threegpurl;
-            }
-            catch
-            {
-                return "";
-            }
+            mediaplayer(valueUrl, position);
         }
 
         private void mediaplayer(string url, int position)
@@ -288,7 +190,7 @@ namespace TSPMD
             if (mp == null)
             {
                 mp = new Android.Media.MediaPlayer();
-                searchActivity_.mp = mp;
+                filesActivity_.mp = mp;
 
                 mp.Completion += delegate
                 {
@@ -321,8 +223,8 @@ namespace TSPMD
                             mpHandler.RemoveCallbacks(mpAction);
                         }
 
-                        searchActivity_.seekBar.Progress = 0;
-                        searchActivity_.textView.Text = "-";
+                        filesActivity_.seekBar.Progress = 0;
+                        filesActivity_.textView.Text = "-";
 
 #if DEBUG
                         Console.WriteLine("Player finished");
@@ -330,6 +232,25 @@ namespace TSPMD
                     }
                 };
             }
+
+            mp = new Android.Media.MediaPlayer();
+            filesActivity_.mp = mp;
+
+            mp.Completion += delegate
+            {
+                try
+                {
+                    mp.Reset();
+                }
+                catch { }
+
+                filesActivity_.seekBar.Progress = 0;
+                filesActivity_.textView.Text = "-";
+
+#if DEBUG
+                Console.WriteLine("Player finished");
+#endif
+            };
 
             mp.SetDataSource(url);
             mp.Prepared += (sender, e) => startPlayer(sender, e, position);
@@ -355,23 +276,23 @@ namespace TSPMD
             mp.Start();
 
             // Duration
-            searchActivity_.seekBar.Max = mp.Duration;
+            filesActivity_.seekBar.Max = mp.Duration;
 
             // Title
-            searchActivity_.textView.Text = items_[position].Title;
+            filesActivity_.textView.Text = items_[position].Title;
 
             // Update seekbar and textview in main activity
             mpHandler = new Handler();
-            searchActivity_.mpHandler = mpHandler;
+            filesActivity_.mpHandler = mpHandler;
 
             mpAction = () =>
             {
-                searchActivity_.mediaplayerIsPlaying();
+                filesActivity_.mediaplayerIsPlaying();
             };
 
-            searchActivity_.mpAction = mpAction;
+            filesActivity_.mpAction = mpAction;
 
-            ActivityContext.mActivity.RunOnUiThread(() => searchActivity_.mediaplayerIsPlaying());
+            ActivityContext.mActivity.RunOnUiThread(() => filesActivity_.mediaplayerIsPlaying());
 
 #if DEBUG
             Console.WriteLine("Player started");

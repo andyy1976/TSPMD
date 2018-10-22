@@ -25,7 +25,7 @@ namespace TSPMD
     /// <summary>
     /// List view item
     /// </summary>
-    public class Information
+    public class ListViewItem
     {
         public string Title { get; set; }
         public string Url { get; set; }

@@ -22,41 +22,28 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading;
-using System.Text;
-using System.Text.RegularExpressions;
 
 using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Support.Design.Widget;
-using Android.Support.V4.Widget;
-using Android.Support.V7.App;
 using Android.Views;
-using Android.Views.InputMethods;
-using Android.Webkit;
 using Android.Widget;
 
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
-
-using Square.Picasso;
 
 namespace TSPMD
 {
     /// <summary>
     /// Files fragment
     /// </summary>
-    public class Files : Fragment, SeekBar.IOnSeekBarChangeListener
+    public class FilesFragment : Fragment, SeekBar.IOnSeekBarChangeListener
     {
-        private List<Information> items = null;
+        private List<ListViewItem> items = null;
         private ListView listView;
-        ListViewAdapter_ adapter;
+        FilesListViewAdapter adapter;
         public TextView textView;
         public SeekBar seekBar;
 
@@ -68,11 +55,7 @@ namespace TSPMD
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            ///////////////////////////////////////////////////////////////////////////////
-            /// 
-            /// UI
-            /// 
-            ///////////////////////////////////////////////////////////////////////////////
+            /* UI */
 
             var view = inflater.Inflate(Resource.Layout.Files, container, false);
 
@@ -134,10 +117,10 @@ namespace TSPMD
             };
 
             if (items == null)
-                items = new List<Information>();
+                items = new List<ListViewItem>();
 
             if (adapter == null)
-                adapter = new ListViewAdapter_(ActivityContext.mActivity, items, this);
+                adapter = new FilesListViewAdapter(ActivityContext.mActivity, items, this);
 
             listView.Adapter = adapter;
 
@@ -182,7 +165,7 @@ namespace TSPMD
             try
             {
                 // Get files
-                var directory = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryMusic);
+                var directory = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads);
 
                 string[] filters = new[] { "*.mp3", "*.m4a", "*.mp4" };
                 string[] files = filters.SelectMany(f => Directory.GetFiles(directory.AbsolutePath, f)).ToArray();
@@ -237,7 +220,7 @@ namespace TSPMD
                     }
 
                     // Add values to ListView
-                    items.Add(new Information()
+                    items.Add(new ListViewItem()
                     {
                         Title = item.Replace(directory.AbsolutePath + "/", "").Replace(".mp3", "").Replace(".m4a", "").Replace(".mp4", ""),
                         Url = item,
