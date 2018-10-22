@@ -3,9 +3,9 @@
   	<style name="MainTheme.Base" parent="Theme.AppCompat">
 	    <item name="windowNoTitle">true</item>
 	    <item name="windowActionBar">false</item>
-	    <item name="colorPrimary">#000000</item>
-	    <item name="colorPrimaryDark">#000000</item>
-	    <item name="colorAccent">#000000</item>
+	    <item name="colorPrimary">#05659f</item>
+	    <item name="colorPrimaryDark">#05659f</item>
+	    <item name="colorAccent">#05659f</item>
   	</style>
   <style name="MainTheme" parent="MainTheme.Base">
   	</style>

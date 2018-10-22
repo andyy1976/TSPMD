@@ -2,5 +2,15 @@
 <resources>
 	<string name="open_drawer">Open</string>
     <string name="close_drawer">Close</string>
-	<string name="app_name">The Simple Pocket Media Downloader</string>
+	<string name="app_name">TSPMD</string>
+  <string name="tubes_prompt">Choose a tube</string>
+  <string-array name="tubes_array">
+    <item>YouTube</item>
+    <item>ccMixter</item>
+    <item>Dailymotion</item>
+    <item>Eroprofile</item>
+    <item>Pornhub</item>
+    <item>Vimeo</item>
+    <item>xHamster</item>
+  </string-array>
 </resources>
