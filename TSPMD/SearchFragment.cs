@@ -483,7 +483,7 @@ namespace TSPMD
             Console.WriteLine(mediaUrl);
 #endif
 
-            // Check if m4aurl has some value
+            // Check if media url has some value
             if (mediaUrl != null && mediaTitle != null)
             {
                 // Start download video file

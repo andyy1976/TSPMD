@@ -221,11 +221,81 @@ namespace TSPMD
         /// <param name="position"></param>
         private void play(string valueUrl, string title, int position, bool isVideo)
         {
-            string threegpurl = "";
+            var tube = string.Empty;
 
-            threegpurl = threegp(valueUrl);
+            if (tube.Contains("www.youtube"))
+                tube = "YouTube";
+            else if (tube.Contains("www.ccmixter"))
+                tube = "ccMixter";
+            else if (tube.Contains("www.dailymotion"))
+                tube = "Dailymotion";
+            else if (tube.Contains("www.eroprofile"))
+                tube = "Eroprofile";
+            else if (tube.Contains("www.pornhub"))
+                tube = "Pornhub";
+            else if (tube.Contains("www.xhamster"))
+                tube = "xHamster";
 
-            if (String.IsNullOrEmpty(threegpurl))
+            var mediaUrl = string.Empty;
+
+            switch (tube)
+            {
+                case "YouTube":
+                    IEnumerable<VideoInfo> videoInfos = DownloadUrlResolver.GetDownloadUrls(valueUrl, false);
+
+                    VideoInfo video = null;
+
+                    if (isVideo)
+                    {
+                        video = videoInfos
+                            .First(info => info.VideoType == VideoType.Mp4 && info.AudioBitrate == 192); // mp4 video
+                    }
+                    else
+                    {
+                        video = videoInfos
+                            .First(info => info.VideoType == VideoType.Mobile); // 3gp
+                    }
+
+                    if (video.RequiresDecryption)
+                    {
+                        DownloadUrlResolver.DecryptDownloadUrl(video);
+                    }
+
+                    mediaUrl = video.DownloadUrl;
+                    break;
+                case "ccMixter":
+                    mediaUrl = ccMixterExtractor.DownloadUrl(valueUrl);
+                    break;
+                case "Dailymotion":
+                    mediaUrl = DailymotionExtractor.DownloadUrl(valueUrl);
+                    break;
+                case "Eroprofile":
+                    mediaUrl = EroprofileExtractor.DownloadUrl(valueUrl);
+                    break;
+                case "Pornhub":
+                    var phitems = PornhubExtractor.Query(valueUrl);
+
+                    foreach (var item in phitems)
+                    {
+                        mediaUrl = item.getUrl();
+                    }
+                    break;
+                case "Vimeo":
+                    mediaUrl = VimeoExtractor.DownloadUrl(valueUrl);
+                    break;
+                case "xHamster":
+                    var xhitmes = xHamsterExtractor.Query(valueUrl);
+
+                    foreach (var item in xhitmes)
+                    {
+                        mediaUrl = item.getUrl(); // mp4
+                    }
+                    break;
+                default:
+                    return;
+            }
+
+            if (String.IsNullOrEmpty(valueUrl))
             {
 #if DEBUG
                 Console.WriteLine("File not found", title);
@@ -233,47 +303,17 @@ namespace TSPMD
                 searchActivity_.publishnotification("File not found", title, searchActivity_.uniquenotificationID());
             }
             else
-                mediaplayer(threegpurl, position);
-        }
-
-        private string threegp(string url)
-        {
-            ///////////////////////////////////////////////////////////////////////////////
-            /// 
-            /// 3gp video cx 
-            /// 
-            ///////////////////////////////////////////////////////////////////////////////
-
-            // URL
-            string threegpurl = "";
-
-            try
             {
-                IEnumerable<VideoInfo> videoInfos = DownloadUrlResolver.GetDownloadUrls(url, false);
-
-                VideoInfo video = videoInfos
-                    .First(info => info.VideoType == VideoType.Mobile);
-
-                if (video.RequiresDecryption)
+                if (isVideo)
                 {
-                    DownloadUrlResolver.DecryptDownloadUrl(video);
+                    var intent = new Intent(ActivityContext.mActivity, typeof(VideoPlayerActivity));
+                    intent.PutExtra("url", valueUrl);
+                    intent.PutExtra("title", title);
+                    ActivityContext.mActivity.StartActivity(intent);
                 }
-
-                threegpurl = video.DownloadUrl;
-
-#if DEBUG
-                Console.WriteLine(threegpurl);
-#endif
-
-                if (string.IsNullOrEmpty(threegpurl))
-                    return "";
                 else
-                    return threegpurl;
-            }
-            catch
-            {
-                return "";
-            }
+                    mediaplayer(valueUrl, position);
+            }    
         }
 
         /// <summary>

@@ -22,30 +22,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Threading;
-using System.Text;
-using System.Text.RegularExpressions;
 
-using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Support.Design.Widget;
-using Android.Support.V4.Widget;
-using Android.Support.V7.App;
 using Android.Views;
-using Android.Views.InputMethods;
-using Android.Webkit;
 using Android.Widget;
-
-using Plugin.Permissions;
-using Plugin.Permissions.Abstractions;
-
-using Square.Picasso;
 
 namespace TSPMD
 {
@@ -153,7 +136,15 @@ namespace TSPMD
 
         private void play(string valueUrl, int position)
         {
-            mediaplayer(valueUrl, position);
+            if (valueUrl.EndsWith("mp4")) // Video
+            {
+                var intent = new Intent(ActivityContext.mActivity, typeof(VideoPlayerActivity));
+                intent.PutExtra("url", valueUrl);
+                intent.PutExtra("title", "Video");
+                ActivityContext.mActivity.StartActivity(intent);
+            }
+            else
+                mediaplayer(valueUrl, position);
         }
 
         private void mediaplayer(string url, int position)
