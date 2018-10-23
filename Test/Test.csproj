@@ -1,0 +1,153 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="ccMixterExtractor\" />
+    <Folder Include="ccMixterSearch\" />
+    <Folder Include="DailymotionExtractor\" />
+    <Folder Include="DailymotionSearch\" />
+    <Folder Include="EroprofileExtractor\" />
+    <Folder Include="EroprofileSearch\" />
+    <Folder Include="FacebookVideoExtractor\" />
+    <Folder Include="Helper\" />
+    <Folder Include="InstagramPictureExtractor\" />
+    <Folder Include="InstagramVideoExtractor\" />
+    <Folder Include="Log\" />
+    <Folder Include="Metadata\" />
+    <Folder Include="PornhubExtractor\" />
+    <Folder Include="PornhubSearch\" />
+    <Folder Include="VimeoExtractor\" />
+    <Folder Include="VimeoSearch\" />
+    <Folder Include="xHamsterExtractor\" />
+    <Folder Include="xHamsterSearch\" />
+    <Folder Include="Web\" />
+    <Folder Include="YouTubeExtractor\" />
+    <Folder Include="YouTubeSearch\" />
+    <Folder Include="Test\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\TSPMD\ccMixterExtractor\ccMixterExtractor.cs">
+      <Link>ccMixterExtractor\ccMixterExtractor.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\ccMixterSearch\ccMixterSearch.cs">
+      <Link>ccMixterSearch\ccMixterSearch.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\ccMixterSearch\ccMixterSearchComponents.cs">
+      <Link>ccMixterSearch\ccMixterSearchComponents.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\DailymotionExtractor\DailymotionExtractor.cs">
+      <Link>DailymotionExtractor\DailymotionExtractor.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\DailymotionSearch\DailymotionSearch.cs">
+      <Link>DailymotionSearch\DailymotionSearch.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\DailymotionSearch\DailymotionSearchComponents.cs">
+      <Link>DailymotionSearch\DailymotionSearchComponents.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\EroprofileExtractor\EroprofileExtractor.cs">
+      <Link>EroprofileExtractor\EroprofileExtractor.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\EroprofileSearch\EroprofileSearch.cs">
+      <Link>EroprofileSearch\EroprofileSearch.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\EroprofileSearch\EroprofileSearchComponents.cs">
+      <Link>EroprofileSearch\EroprofileSearchComponents.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\FacebookVideoExtractor\FacebookVideoExtractor.cs">
+      <Link>FacebookVideoExtractor\FacebookVideoExtractor.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\Helper\Helper.cs">
+      <Link>Helper\Helper.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\InstagramPictureExtractor\InstagramPictureExtractor.cs">
+      <Link>InstagramPictureExtractor\InstagramPictureExtractor.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\InstagramVideoExtractor\InstagramVideoExtractor.cs">
+      <Link>InstagramVideoExtractor\InstagramVideoExtractor.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\Log\Log.cs">
+      <Link>Log\Log.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\Metadata\Metadata.cs">
+      <Link>Metadata\Metadata.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\PornhubExtractor\PornhubExtractor.cs">
+      <Link>PornhubExtractor\PornhubExtractor.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\PornhubExtractor\PornhubExtractorComponents.cs">
+      <Link>PornhubExtractor\PornhubExtractorComponents.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\PornhubSearch\PornhubSearch.cs">
+      <Link>PornhubSearch\PornhubSearch.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\PornhubSearch\PornhubSearchComponents.cs">
+      <Link>PornhubSearch\PornhubSearchComponents.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\VimeoExtractor\VimeoExtractor.cs">
+      <Link>VimeoExtractor\VimeoExtractor.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\VimeoSearch\VimeoSearch.cs">
+      <Link>VimeoSearch\VimeoSearch.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\VimeoSearch\VimeoSearchComponents.cs">
+      <Link>VimeoSearch\VimeoSearchComponents.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\Web\Web.cs">
+      <Link>Web\Web.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\xHamsterExtractor\xHamsterExtractor.cs">
+      <Link>xHamsterExtractor\xHamsterExtractor.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\xHamsterExtractor\xHamsterExtractorComponents.cs">
+      <Link>xHamsterExtractor\xHamsterExtractorComponents.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\xHamsterSearch\xHamsterSearch.cs">
+      <Link>xHamsterSearch\xHamsterSearch.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\xHamsterSearch\xHamsterSearchComponents.cs">
+      <Link>xHamsterSearch\xHamsterSearchComponents.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\YouTubeExtractor\AdaptiveType.cs">
+      <Link>YouTubeExtractor\AdaptiveType.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\YouTubeExtractor\AudioType.cs">
+      <Link>YouTubeExtractor\AudioType.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\YouTubeExtractor\Decipherer.cs">
+      <Link>YouTubeExtractor\Decipherer.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\YouTubeExtractor\DownloadUrlResolver.cs">
+      <Link>YouTubeExtractor\DownloadUrlResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\YouTubeExtractor\HttpHelper.cs">
+      <Link>YouTubeExtractor\HttpHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\YouTubeExtractor\VideoInfo.cs">
+      <Link>YouTubeExtractor\VideoInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\YouTubeExtractor\VideoNotAvailableException.cs">
+      <Link>YouTubeExtractor\VideoNotAvailableException.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\YouTubeExtractor\VideoType.cs">
+      <Link>YouTubeExtractor\VideoType.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\YouTubeExtractor\YoutubeParseException.cs">
+      <Link>YouTubeExtractor\YoutubeParseException.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\YouTubeSearch\YouTubeSearch.cs">
+      <Link>YouTubeSearch\YouTubeSearch.cs</Link>
+    </Compile>
+    <Compile Include="..\TSPMD\YouTubeSearch\YouTubeSearchComponents.cs">
+      <Link>YouTubeSearch\YouTubeSearchComponents.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="taglib" Version="2.1.0" />
+    <PackageReference Include="SharpZipLib" Version="1.0.0" />
+  </ItemGroup>
+</Project>

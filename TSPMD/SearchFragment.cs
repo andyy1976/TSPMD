@@ -37,6 +37,7 @@ using Android.Widget;
 
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
+using Steelkiwi.Com.Library;
 
 namespace TSPMD
 {
@@ -65,6 +66,8 @@ namespace TSPMD
 
         EditText editText;
 
+        DotsLoaderView dotsLoaderView;
+
         static readonly string CHANNEL_ID = "location_notification";
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -92,6 +95,8 @@ namespace TSPMD
 
             spinneradapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
             spinner.Adapter = spinneradapter;
+
+            dotsLoaderView = view.FindViewById<DotsLoaderView>(Resource.Id.dotsLoaderView);
 
             // Prevent sleeping
             ActivityContext.mActivity.Window.SetFlags(WindowManagerFlags.KeepScreenOn, WindowManagerFlags.KeepScreenOn);
@@ -383,7 +388,7 @@ namespace TSPMD
         /// <param name="tube"></param>
         private void search(string value, string tube)
         {
-            if (SEARCH.DO(value, tube, items))
+            if (SEARCH.DO(value, tube, items, dotsLoaderView))
             {
                 ActivityContext.mActivity.RunOnUiThread(() => adapter.NotifyDataSetChanged());
             }
@@ -747,10 +752,12 @@ namespace TSPMD
         /// <param name="tube"></param>
         /// <param name="items"></param>
         /// <returns></returns>
-        public static bool DO(string value, string tube, List<ListViewItem> items)
+        public static bool DO(string value, string tube, List<ListViewItem> items, DotsLoaderView dotsLoaderView)
         {
             try
             {
+                dotsLoaderView.Show();
+
                 switch (tube)
                 {
                     case "YouTube":
@@ -859,6 +866,7 @@ namespace TSPMD
                         }
                         break;
                     default:
+                        dotsLoaderView.Hide();
                         return false;
                 }
 
@@ -868,6 +876,8 @@ namespace TSPMD
                 }
                 catch { }
 
+                dotsLoaderView.Hide();
+
                 return true;
             }
             catch
@@ -875,6 +885,8 @@ namespace TSPMD
 #if DEBUG
                 Console.WriteLine("Parsing error");
 #endif
+                dotsLoaderView.Hide();
+
                 return false;
             }
         }
