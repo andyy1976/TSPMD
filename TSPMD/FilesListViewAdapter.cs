@@ -140,7 +140,7 @@ namespace TSPMD
 
         private void play(string valueUrl, int position)
         {
-            if (valueUrl.EndsWith("mp4")) // Video
+            if (valueUrl.EndsWith("mp4") || valueUrl.EndsWith("m4u")) // Video
             {
                 var intent = new Intent(ActivityContext.mActivity, typeof(VideoPlayerActivity));
                 intent.PutExtra("url", valueUrl);
