@@ -167,7 +167,7 @@ namespace TSPMD
                 // Get files
                 var directory = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads);
 
-                string[] filters = new[] { "*.mp3", "*.m4a", "*.mp4" };
+                string[] filters = new[] { "*.mp3", "*.m4a", "*.mp4", "*.m4u" };
                 string[] files = filters.SelectMany(f => Directory.GetFiles(directory.AbsolutePath, f)).ToArray();
 
                 Array.Sort(files, StringComparer.InvariantCulture);
@@ -222,13 +222,13 @@ namespace TSPMD
                     // Add values to ListView
                     items.Add(new ListViewItem()
                     {
-                        Title = item.Replace(directory.AbsolutePath + "/", "").Replace(".mp3", "").Replace(".m4a", "").Replace(".mp4", ""),
+                        Title = item.Replace(directory.AbsolutePath + "/", "").Replace(".mp3", "").Replace(".m4a", "").Replace(".mp4", "").Replace(".m4u", ""),
                         Url = item,
                         Duration = duration
                     });
 
 #if DEBUG
-                    Console.WriteLine(item.Replace(directory.AbsolutePath + "/", "").Replace(".mp3", "").Replace(".m4a", "").Replace(".mp4", "") + " | " + item);
+                    Console.WriteLine(item.Replace(directory.AbsolutePath + "/", "").Replace(".mp3", "").Replace(".m4a", "").Replace(".mp4", "").Replace(".m4u", "") + " | " + item);
 #endif
                 }
             }

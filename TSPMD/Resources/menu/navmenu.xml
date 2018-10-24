@@ -10,6 +10,10 @@
         android:icon="@drawable/Folder"
 				android:title="Files"
 				android:id="@+id/nav_files" />
+      <item
+        android:icon="@drawable/About"
+				android:title="About"
+				android:id="@+id/nav_about" />
     </menu>
   </item>
 </menu>

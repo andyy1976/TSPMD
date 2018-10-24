@@ -23,13 +23,17 @@
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
+using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 
 namespace TSPMD
 {
-    public class VideoPlayerActivity : Activity
+    /// <summary>
+    /// Video player activity
+    /// </summary>
+    [Activity(Label = "TSPMD")]
+    public class VideoPlayerActivity : AppCompatActivity
     {
         private VideoView videoPlayer;
         private MediaController mediaController;

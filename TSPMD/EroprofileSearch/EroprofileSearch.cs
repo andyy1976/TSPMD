@@ -66,7 +66,7 @@ namespace TSPMD
                     if (Log.getMode())
                         Log.println("Duration : " + duration);
 
-                    url = Helper.Concat("http://www.eroprofile.com", Helper.ExtractValue(result[ctr].Value, "><div><a href=\"", "\" class=\"cbox\""));
+                    url = Helper.Concat("http://www.eroprofile.com", Helper.ExtractValue(result[ctr].Value, "><div class=\"videoCnt\"><a href=\"", "\" class="));
 
                     if (Log.getMode())
                         Log.println("Url : " + url);

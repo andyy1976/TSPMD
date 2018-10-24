@@ -73,7 +73,7 @@ namespace TSPMD
         {
             switch (e.MenuItem.ItemId)
             {
-                case (Resource.Id.nav_search):
+                case (Resource.Id.nav_search): // Search
                     var SearchFragment = new SearchFragment();
                     var fragmentSearch = FragmentManager.BeginTransaction();
                     fragmentSearch.Replace(Resource.Id.fragment_container, SearchFragment);
@@ -83,12 +83,22 @@ namespace TSPMD
                     this.Title = "TSPMD";
 
                     break;
-                case (Resource.Id.nav_files):
-                    var MusicFragment = new FilesFragment();
-                    var fragmentMusic = FragmentManager.BeginTransaction();
-                    fragmentMusic.Replace(Resource.Id.fragment_container, MusicFragment);
-                    fragmentMusic.AddToBackStack(null);
-                    fragmentMusic.Commit();
+                case (Resource.Id.nav_files): // Files
+                    var FilesFragment = new FilesFragment();
+                    var fragmentFiles = FragmentManager.BeginTransaction();
+                    fragmentFiles.Replace(Resource.Id.fragment_container, FilesFragment);
+                    fragmentFiles.AddToBackStack(null);
+                    fragmentFiles.Commit();
+
+                    this.Title = "TSPMD";
+
+                    break;
+                case (Resource.Id.nav_about): // About
+                    var AboutFragment = new AboutFragment();
+                    var fragmentAbout = FragmentManager.BeginTransaction();
+                    fragmentAbout.Replace(Resource.Id.fragment_container, AboutFragment);
+                    fragmentAbout.AddToBackStack(null);
+                    fragmentAbout.Commit();
 
                     this.Title = "TSPMD";
 

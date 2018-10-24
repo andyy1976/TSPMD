@@ -7,7 +7,11 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            Log.setMode(true);
+            #region Log
+
+            //Log.setMode(true);
+            
+            #endregion
 
             #region YouTube
 
@@ -45,7 +49,37 @@ namespace Test
             //var EroprofileSearch = new Test_EroprofileSearch();
 
             /* Extract */
-            var EroprofileExtractor = new Test_EroprofileExtractor();
+            //var EroprofileExtractor = new Test_EroprofileExtractor();
+
+            #endregion
+
+            #region Pornhub
+
+            /* Search */
+            //var PornhubSearch = new Test_PornhubSearch();
+
+            /* Extract */
+            //var PornhubExtractor = new Test_PornhubExtractor();
+
+            #endregion
+
+            #region Vimeo
+
+            /* Search */
+            //var VimeoSearch = new Test_VimeoSearch();
+
+            /* Extract */
+            //var VimeoExtractor = new Test_VimeoExtractor();
+
+            #endregion
+
+            #region xHamster
+
+            /* Search */
+            //var xHamsterSearch = new Test_xHamsterSearch();
+
+            /* Extract */
+            //var xHamsterExtractor = new Test_xHamsterExtractor();
 
             #endregion
 

@@ -49,7 +49,7 @@ namespace TSPMD
                     Log.println("Content: " + content);
 
                 // Search string
-                string pattern = "<div class=\"video\">.*?</div></div></div>";
+                string pattern = "<div class=\"thumb-list__item video-thumb\">.*?</div> </div>";
                 MatchCollection result = Regex.Matches(content, pattern, RegexOptions.Singleline);
 
                 for (int ctr = 0; ctr <= result.Count - 1; ctr++)
@@ -57,22 +57,22 @@ namespace TSPMD
                     if (Log.getMode())
                         Log.println("Match: " + result[ctr].Value);
 
-                    title = Helper.ExtractValue(result[ctr].Value, "class='thumb' alt=\"", "\"/><");
+                    title = Helper.ExtractValue(result[ctr].Value, "alt=\"", "\">");
 
                     if (Log.getMode())
                         Log.println("Title : " + title);
 
-                    duration = Helper.ExtractValue(result[ctr].Value, "'></div><b>", "</b><u>");
+                    duration = Helper.ExtractValue(result[ctr].Value, "duration\">", "</div> ");
 
                     if (Log.getMode())
                         Log.println("Duration : " + duration);
 
-                    url = Helper.ExtractValue(result[ctr].Value, "<a href=\"", "\"");
+                    url = Helper.ExtractValue(result[ctr].Value, "href=\"", "\"");
 
                     if (Log.getMode())
                         Log.println("Url : " + url);
 
-                    thumbnail = Helper.ExtractValue(result[ctr].Value, "<img src='", "' class='t");
+                    thumbnail = Helper.ExtractValue(result[ctr].Value, "thumb-image-container__image\" src=\"", "\" ");
 
                     if (Log.getMode())
                         Log.println("Thumbnail : " + thumbnail);

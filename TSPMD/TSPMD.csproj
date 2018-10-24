@@ -131,6 +131,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutFragment.cs" />
     <Compile Include="ActivityContext.cs" />
     <Compile Include="ccMixterExtractor\ccMixterExtractor.cs" />
     <Compile Include="ccMixterSearch\ccMixterSearch.cs" />
@@ -194,6 +195,9 @@
     <AndroidResource Include="Resources\drawable\Icon.png" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="Assets\Thumbnail.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AndroidAsset>
     <Content Include="Properties\AndroidManifest.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -217,6 +221,11 @@
     <AndroidResource Include="Resources\drawable\Folder.png" />
     <AndroidResource Include="Resources\drawable\Search.png" />
     <AndroidResource Include="Resources\layout\Player.axml" />
+    <AndroidResource Include="Resources\drawable\About.png" />
+    <AndroidResource Include="Resources\layout\About.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\Icon1.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

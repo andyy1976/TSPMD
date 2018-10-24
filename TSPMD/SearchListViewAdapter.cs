@@ -112,7 +112,10 @@ namespace TSPMD
 
             try
             {
-                Picasso.With(this.context_).Load(items_[position].Thumbnail).Into(imageView);
+                if (!String.IsNullOrEmpty(items_[position].Thumbnail))
+                    Picasso.With(this.context_).Load(items_[position].Thumbnail).Into(imageView);
+                else
+                    Picasso.With(this.context_).Load("file:///android_asset/Thumbnail.png").Into(imageView);
             }
             catch
             {
@@ -131,11 +134,9 @@ namespace TSPMD
             {
                 ActivityContext.mActivity.RunOnUiThread(delegate
                 {
-                    if (valueUrl.Contains("www.youtube"))
+                    if (valueUrl.Contains("youtube"))
                     {
-                        ActivityContext.mActivity.RunOnUiThread(delegate
-                        {
-                            new Android.Support.V7.App.AlertDialog.Builder(ActivityContext.mActivity)
+                        new Android.Support.V7.App.AlertDialog.Builder(ActivityContext.mActivity)
                                            .SetPositiveButton("Audio", (sender, e) =>
                                            {
                                                Thread thread = new Thread(() => play(valueUrl, txtTitle.Text, position, false));
@@ -149,9 +150,8 @@ namespace TSPMD
                                            .SetTitle(txtTitle.Text)
                                            .SetIcon(Resource.Drawable.Icon)
                                            .Show();
-                        });
                     }
-                    else if (valueUrl.Contains("www.ccmixter"))
+                    else if (valueUrl.Contains("ccmixter"))
                     {
                         Thread thread = new Thread(() => play(valueUrl, txtTitle.Text, position, false));
                         thread.Start();
@@ -175,7 +175,7 @@ namespace TSPMD
             {
                 ActivityContext.mActivity.RunOnUiThread(delegate
                 {
-                    if (valueUrl.Contains("www.youtube"))
+                    if (valueUrl.Contains("youtube"))
                     {
                         ActivityContext.mActivity.RunOnUiThread(delegate
                         {
@@ -195,7 +195,7 @@ namespace TSPMD
                                            .Show();
                         });
                     }
-                    else if (valueUrl.Contains("www.ccmixter"))
+                    else if (valueUrl.Contains("ccmixter"))
                     {
                         Thread thread = new Thread(() => searchActivity_.Download(txtTitle.Text, valueUrl, false));
                         thread.Start();
@@ -223,17 +223,19 @@ namespace TSPMD
         {
             var tube = string.Empty;
 
-            if (tube.Contains("www.youtube"))
+            if (valueUrl.Contains("youtube"))
                 tube = "YouTube";
-            else if (tube.Contains("www.ccmixter"))
+            else if (valueUrl.Contains("ccmixter"))
                 tube = "ccMixter";
-            else if (tube.Contains("www.dailymotion"))
+            else if (valueUrl.Contains("dailymotion"))
                 tube = "Dailymotion";
-            else if (tube.Contains("www.eroprofile"))
+            else if (valueUrl.Contains("eroprofile"))
                 tube = "Eroprofile";
-            else if (tube.Contains("www.pornhub"))
+            else if (valueUrl.Contains("pornhub"))
                 tube = "Pornhub";
-            else if (tube.Contains("www.xhamster"))
+            else if (valueUrl.Contains("vimeo"))
+                tube = "Vimeo";
+            else if (valueUrl.Contains("xhamster"))
                 tube = "xHamster";
 
             var mediaUrl = string.Empty;
@@ -277,7 +279,8 @@ namespace TSPMD
 
                     foreach (var item in phitems)
                     {
-                        mediaUrl = item.getUrl();
+                        if (!String.IsNullOrEmpty(item.getUrl()))
+                            mediaUrl = item.getUrl();
                     }
                     break;
                 case "Vimeo":
@@ -288,14 +291,19 @@ namespace TSPMD
 
                     foreach (var item in xhitmes)
                     {
-                        mediaUrl = item.getUrl(); // mp4
+                        if (!String.IsNullOrEmpty(item.getUrl()))
+                            mediaUrl = item.getUrl();
                     }
                     break;
                 default:
                     return;
             }
 
-            if (String.IsNullOrEmpty(valueUrl))
+#if DEBUG
+            Console.WriteLine("Media url: " + mediaUrl);
+#endif
+
+            if (String.IsNullOrEmpty(mediaUrl))
             {
 #if DEBUG
                 Console.WriteLine("File not found", title);
@@ -307,12 +315,12 @@ namespace TSPMD
                 if (isVideo)
                 {
                     var intent = new Intent(ActivityContext.mActivity, typeof(VideoPlayerActivity));
-                    intent.PutExtra("url", valueUrl);
+                    intent.PutExtra("url", mediaUrl);
                     intent.PutExtra("title", title);
                     ActivityContext.mActivity.StartActivity(intent);
                 }
                 else
-                    mediaplayer(valueUrl, position);
+                    mediaplayer(mediaUrl, position);
             }    
         }
 

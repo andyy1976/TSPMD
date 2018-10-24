@@ -57,7 +57,7 @@ namespace TSPMD
                     if (Log.getMode())
                         Log.println("Match: " + result[ctr].Value);
 
-                    title = Helper.ExtractValue(result[ctr].Value, "title=\"", "\" class=\"img\"");
+                    title = Helper.ExtractValue(result[ctr].Value, "title=\"", "\" class=\"img");
 
                     if (Log.getMode())
                         Log.println("Title : " + title);

@@ -20,10 +20,28 @@
  *
  ****************************************************************************/
 
+using Android.App;
+using Android.OS;
+using Android.Views;
+
 namespace TSPMD
 {
-    public static class ActivityContext
+    /// <summary>
+    /// About fragment
+    /// </summary>
+    public class AboutFragment : Fragment
     {
-        public static MainActivity mActivity { get; set; }
+        View view;
+
+        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        {
+            /* UI */
+
+            var view = inflater.Inflate(Resource.Layout.About, container, false);
+
+            this.view = view;
+
+            return view;
+        }
     }
 }

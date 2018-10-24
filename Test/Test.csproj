@@ -27,7 +27,6 @@
     <Folder Include="Web\" />
     <Folder Include="YouTubeExtractor\" />
     <Folder Include="YouTubeSearch\" />
-    <Folder Include="Test\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\TSPMD\ccMixterExtractor\ccMixterExtractor.cs">

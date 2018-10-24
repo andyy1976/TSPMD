@@ -101,9 +101,13 @@ namespace TSPMD
             // Url
             string valueUrl = items_[position].Url;
 
-            // Duration
-            TextView txtDuration = row.FindViewById<TextView>(Resource.Id.textViewDuration_);
-            txtDuration.Text = items_[position].Duration;
+            // Media type
+            TextView txtMediaType = row.FindViewById<TextView>(Resource.Id.textViewMediaType);
+
+            if (valueUrl.EndsWith(".mp3") || valueUrl.EndsWith(".m4a"))
+                txtMediaType.Text = "Audio";
+            else
+                txtMediaType.Text = "Video";
 
             // Play
             Button buttonPlay = row.FindViewById<Button>(Resource.Id.buttonRowPlay_);

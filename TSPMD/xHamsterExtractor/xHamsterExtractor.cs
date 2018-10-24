@@ -45,129 +45,91 @@ namespace TSPMD
             if (Log.getMode())
                 Log.println("Match: " + content);
 
+            title = Helper.ExtractValue(content, "title\" content=\"", "\">");
+
             // Search string
-            string pattern = "players:.*?}\"}},";
+            string pattern = "download\":.*?,{\"name\"";
             MatchCollection result = Regex.Matches(content, pattern, RegexOptions.Singleline);
 
             for (int ctr = 0; ctr <= result.Count - 1; ctr++)
             {
-                if (!result[ctr].Value.Contains("</script>"))
-                {
-                    if (Log.getMode())
-                        Log.println("Content: " + result[ctr].Value);
+                if (Log.getMode())
+                    Log.println("Content: " + result[ctr].Value);
 
-                    title = Helper.ExtractValue(result[ctr].Value, "\"title\":\"", "\",\"");
+                if (Log.getMode())
+                    Log.println("Match: " + result[ctr].Value);
 
-                    /* FLV */
+                /* 240p */
 
-                    if (Log.getMode())
-                        Log.println("Title: " + title);
+                if (Log.getMode())
+                    Log.println("Title: " + title);
 
-                    format = "flv";
+                format = "mp4";
 
-                    if (Log.getMode())
-                        Log.println("Format: " + format);
+                if (Log.getMode())
+                    Log.println("Format: " + format);
 
-                    resolution = "";
+                resolution = "240p";
 
-                    if (Log.getMode())
-                        Log.println("Resolution: " + resolution);
+                if (Log.getMode())
+                    Log.println("Resolution: " + resolution);
 
-                    url = Helper.ExtractValue(result[ctr].Value, "\"file\":\"", "\",\"").Replace("\\", "");
+                url = Helper.ExtractValue(result[ctr].Value, "\"240p\":\"", "\"}").Replace("\\", "");
 
-                    if (Log.getMode())
-                        Log.println("Url: " + url);
+                if (Log.getMode())
+                    Log.println("Url: " + url);
 
-                    xHamsterExtractorComponents comp = new xHamsterExtractorComponents(title, format, resolution, url);
+                var comp = new xHamsterExtractorComponents(title, format, resolution, url);
 
-                    items.Add(comp);
+                items.Add(comp);
 
-                    /* **************************************************************************** */
+                /* 480p */
 
-                    /* MP4 */
-                    
-                    // Search string
-                    string pattern_ = "sources:.*?},";
-                    MatchCollection result_ = Regex.Matches(content, pattern_, RegexOptions.Singleline);
+                if (Log.getMode())
+                    Log.println("Title: " + title);
 
-                    for (int ctr_ = 0; ctr_ <= result_.Count - 1; ctr_++)
-                    {
-                        if (Log.getMode())
-                            Log.println("Match: " + result_[ctr_].Value);
+                format = "mp4";
 
-                        /* 240p */
+                if (Log.getMode())
+                    Log.println("Format: " + format);
 
-                        if (Log.getMode())
-                            Log.println("Title: " + title);
+                resolution = "480p";
 
-                        format = "mp4";
+                if (Log.getMode())
+                    Log.println("Resolution: " + resolution);
 
-                        if (Log.getMode())
-                            Log.println("Format: " + format);
+                url = Helper.ExtractValue(result[ctr].Value, "\"480p\":\"", "\",\"").Replace("\\", "");
 
-                        resolution = "240p";
+                if (Log.getMode())
+                    Log.println("Url: " + url);
 
-                        if (Log.getMode())
-                            Log.println("Resolution: " + resolution);
+                comp = new xHamsterExtractorComponents(title, format, resolution, url);
 
-                        url = Helper.ExtractValue(result_[ctr_].Value, "\"240p\":\"", "\",").Replace("\\", "");
+                items.Add(comp);
 
-                        if (Log.getMode())
-                            Log.println("Url: " + url);
+                /* 720p */
 
-                        comp = new xHamsterExtractorComponents(title, format, resolution, url);
+                if (Log.getMode())
+                    Log.println("Title: " + title);
 
-                        items.Add(comp);
+                format = "mp4";
 
-                        /* 480p */
+                if (Log.getMode())
+                    Log.println("Format: " + format);
 
-                        if (Log.getMode())
-                            Log.println("Title: " + title);
+                resolution = "720p";
 
-                        format = "mp4";
+                if (Log.getMode())
+                    Log.println("Resolution: " + resolution);
 
-                        if (Log.getMode())
-                            Log.println("Format: " + format);
+                url = Helper.ExtractValue(result[ctr].Value, "\"720p\":\"", "\",\"").Replace("\\", "");
 
-                        resolution = "480p";
+                if (Log.getMode())
+                    Log.println("Url: " + url);
 
-                        if (Log.getMode())
-                            Log.println("Resolution: " + resolution);
+                comp = new xHamsterExtractorComponents(title, format, resolution, url);
 
-                        url = Helper.ExtractValue(result_[ctr_].Value, "\"480p\":\"", "\"").Replace("\\", "");
-
-                        if (Log.getMode())
-                            Log.println("Url: " + url);
-
-                        comp = new xHamsterExtractorComponents(title, format, resolution, url);
-
-                        items.Add(comp);
-
-                        /* 720p */
-
-                        if (Log.getMode())
-                            Log.println("Title: " + title);
-
-                        format = "mp4";
-
-                        if (Log.getMode())
-                            Log.println("Format: " + format);
-
-                        resolution = "720p";
-
-                        if (Log.getMode())
-                            Log.println("Resolution: " + resolution);
-
-                        url = Helper.ExtractValue(result_[ctr_].Value, "\"720p\":\"", "\"}").Replace("\\", "");
-
-                        if (Log.getMode())
-                            Log.println("Url: " + url);
-
-                        comp = new xHamsterExtractorComponents(title, format, resolution, url);
-
-                        items.Add(comp);
-                    }
-                }
+                items.Add(comp);
             }
 
             return items;

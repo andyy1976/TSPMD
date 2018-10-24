@@ -6,7 +6,7 @@ namespace Test
     {
         public Test_EroprofileExtractor()
         {
-            var url = "http://www.eroprofile.com/m/videos/suggestNiche/Solo-Dildo-Test-Alles-was-reinpasst";
+            var url = "http://www.eroprofile.com/m/videos/view/Anal-porn-movie-s-starlet-test";
 
             var extractedUrl = EroprofileExtractor.DownloadUrl(url);
 

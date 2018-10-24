@@ -414,6 +414,9 @@ namespace TSPMD
             // URL
             string mediaUrl = null;
 
+            // File extension
+            string file_extension = string.Empty;
+
             try
             {
                 switch (spinnerSelected)
@@ -427,6 +430,8 @@ namespace TSPMD
                         {
                             video = videoInfos
                                 .First(info => info.VideoType == VideoType.Mp4 && info.AudioBitrate == 192); // mp4 video
+
+                            file_extension = ".mp4";
                         }
                         else
                         {
@@ -446,28 +451,38 @@ namespace TSPMD
                         break;
                     case "Dailymotion":
                         mediaUrl = DailymotionExtractor.DownloadUrl(url);
+                        file_extension = ".mp4";
                         break;
                     case "Eroprofile":
                         mediaUrl = EroprofileExtractor.DownloadUrl(url);
+                        file_extension = ".m4u";
                         break;
                     case "Pornhub":
                         var phitems = PornhubExtractor.Query(url);
 
                         foreach (var item in phitems)
                         {
-                            mediaUrl = item.getUrl();
+                            if (!String.IsNullOrEmpty(item.getUrl()))
+                                mediaUrl = item.getUrl();
                         }
+
+                        file_extension = ".mp4";
                         break;
                     case "Vimeo":
                         mediaUrl = VimeoExtractor.DownloadUrl(url);
+
+                        file_extension = ".mp4";
                         break;
                     case "xHamster":
                         var xhitmes = xHamsterExtractor.Query(url);
 
                         foreach (var item in xhitmes)
                         {
-                            mediaUrl = item.getUrl(); // mp4
+                            if (!String.IsNullOrEmpty(item.getUrl()))
+                                mediaUrl = item.getUrl();
                         }
+
+                        file_extension = ".mp4";
                         break;
                     default:
                         return;
@@ -492,7 +507,7 @@ namespace TSPMD
             if (mediaUrl != null && mediaTitle != null)
             {
                 // Start download video file
-                DownloadFile(mediaUrl, mediaTitle, isVideo);
+                DownloadFile(mediaUrl, mediaTitle, isVideo, file_extension);
 
 #if DEBUG
                 Console.WriteLine("Start download");
@@ -514,7 +529,7 @@ namespace TSPMD
         /// <param name="URL"></param>
         /// <param name="Title"></param>
         /// <param name="isVideo"></param>
-        private void DownloadFile(string URL, string Title, bool isVideo)
+        private void DownloadFile(string URL, string Title, bool isVideo, string file_extension)
         {
             WebClient DownloadFile = new WebClient();
 
@@ -529,7 +544,7 @@ namespace TSPMD
             DownloadFile.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted);
 
             // Start download
-            var directory = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryMusic);
+            var directory = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads);
 
             // Check if directory exists
             try
@@ -546,18 +561,28 @@ namespace TSPMD
                     .Replace(".", "")
                     .Replace("|", "")
                     .Replace("?", "")
-                    .Replace("!", "") + ".mp4");
+                    .Replace("!", "") + file_extension);
             }
             else
             {
-                file = Path.Combine(directory.AbsolutePath, makeFilenameValid(Title).Replace("/", "")
+                if (URL.Contains("youtube"))
+                {
+                    file = Path.Combine(directory.AbsolutePath, makeFilenameValid(Title).Replace("/", "")
                     .Replace(".", "")
                     .Replace("|", "")
                     .Replace("?", "")
                     .Replace("!", "") + ".m4a");
+                }
+                else
+                {
+                    file = Path.Combine(directory.AbsolutePath, makeFilenameValid(Title).Replace("/", "")
+                    .Replace(".", "")
+                    .Replace("|", "")
+                    .Replace("?", "")
+                    .Replace("!", "") + ".mp3");
+                }
             }
             
-
 #if DEBUG
             Console.WriteLine(file);
 #endif
@@ -638,7 +663,7 @@ namespace TSPMD
                             title += s__;
                     }
 
-                    title = title.TrimStart().TrimEnd().Replace(".m4a", "").Replace(".mp4", "");
+                    title = title.TrimStart().TrimEnd().Replace(".m4a", "").Replace(".mp3", "").Replace(".mp4", "").Replace(".m4u", "");
                 }
                 else
                 {
@@ -654,7 +679,7 @@ namespace TSPMD
                                 title += s__ + " ";
                         }
 
-                        title = title.TrimStart().TrimEnd().Replace(".m4a", "").Replace(".mp4", "");
+                        title = title.TrimStart().TrimEnd().Replace(".m4a", "").Replace(".mp3", "").Replace(".mp4", "").Replace(".m4u", "");
                     }
                     else
                     {
@@ -756,8 +781,8 @@ namespace TSPMD
         {
             try
             {
-                dotsLoaderView.Show();
-
+                ActivityContext.mActivity.RunOnUiThread(() => dotsLoaderView.Show());
+                
                 switch (tube)
                 {
                     case "YouTube":
@@ -765,15 +790,19 @@ namespace TSPMD
 
                         foreach (var item in ytitems)
                         {
-                            // Add values
-                            items.Add(new ListViewItem()
+                            if (!String.IsNullOrEmpty(item.getDuration()) && 
+                                !String.IsNullOrEmpty(item.getDuration()))
                             {
-                                Title = item.getTitle(),
-                                Author = item.getAuthor(),
-                                Url = item.getUrl(),
-                                Duration = item.getDuration(),
-                                Thumbnail = item.getThumbnail()
-                            });
+                                // Add items
+                                items.Add(new ListViewItem()
+                                {
+                                    Title = item.getTitle(),
+                                    Author = item.getAuthor(),
+                                    Url = item.getUrl(),
+                                    Duration = item.getDuration(),
+                                    Thumbnail = item.getThumbnail()
+                                });
+                            }
                         }
                         break;
                     case "ccMixter":
@@ -781,7 +810,7 @@ namespace TSPMD
 
                         foreach (var item in ccitems)
                         {
-                            // Add values
+                            // Add items
                             items.Add(new ListViewItem()
                             {
                                 Title = item.getTitle(),
@@ -795,7 +824,7 @@ namespace TSPMD
 
                         foreach (var item in dmitems)
                         {
-                            // Add values
+                            // Add items
                             items.Add(new ListViewItem()
                             {
                                 Title = item.getTitle(),
@@ -809,7 +838,7 @@ namespace TSPMD
 
                         foreach (var item in epitems)
                         {
-                            // Add values
+                            // Add items
                             items.Add(new ListViewItem()
                             {
                                 Title = item.getTitle(),
@@ -824,7 +853,7 @@ namespace TSPMD
 
                         foreach (var item in phitems)
                         {
-                            // Add values
+                            // Add items
                             items.Add(new ListViewItem()
                             {
                                 Title = item.getTitle(),
@@ -839,7 +868,7 @@ namespace TSPMD
 
                         foreach (var item in vmitems)
                         {
-                            // Add values
+                            // Add items
                             items.Add(new ListViewItem()
                             {
                                 Title = item.getTitle(),
@@ -855,7 +884,7 @@ namespace TSPMD
 
                         foreach (var item in xhitems)
                         {
-                            // Add values
+                            // Add items
                             items.Add(new ListViewItem()
                             {
                                 Title = item.getTitle(),
@@ -866,7 +895,7 @@ namespace TSPMD
                         }
                         break;
                     default:
-                        dotsLoaderView.Hide();
+                        ActivityContext.mActivity.RunOnUiThread(() => dotsLoaderView.Hide());
                         return false;
                 }
 
@@ -876,16 +905,16 @@ namespace TSPMD
                 }
                 catch { }
 
-                dotsLoaderView.Hide();
+                ActivityContext.mActivity.RunOnUiThread(() => dotsLoaderView.Hide());
 
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
 #if DEBUG
-                Console.WriteLine("Parsing error");
+                Console.WriteLine(ex.ToString());
 #endif
-                dotsLoaderView.Hide();
+                ActivityContext.mActivity.RunOnUiThread(() => dotsLoaderView.Hide());
 
                 return false;
             }
