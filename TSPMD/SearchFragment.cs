@@ -290,8 +290,8 @@ namespace TSPMD
                 return;
             }
 
-            var name = "Local Notifications";
-            var description = "Local Notifications";
+            var name = "TSPMD Local Notifications";
+            var description = "TSPMD Local Notifications";
             var channel = new NotificationChannel(CHANNEL_ID, name, NotificationImportance.Default)
             {
                 Description = description
