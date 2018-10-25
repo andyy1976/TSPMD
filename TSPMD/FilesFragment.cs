@@ -126,36 +126,28 @@ namespace TSPMD
 
             textView.Text = "-";
 
+            // Clear listView
+            items.Clear();
+
+            try
+            {
+                adapter.NotifyDataSetChanged();
+            }
+            catch
+            { }
+
+            try
+            {
+                // Load
+                Thread thread = new Thread(() => loadAsync());
+                ActivityContext.mActivity.RunOnUiThread(() => thread.Start());
+            }
+            catch { }
+
             // Initialize seekbar
             seekBar.SetOnSeekBarChangeListener(this);
 
             return view;
-        }
-
-        public override void OnHiddenChanged(bool hidden)
-        {
-            base.OnHiddenChanged(hidden);
-
-            if (!hidden)
-            {
-                try
-                {
-                    // Clear listView
-                    items.Clear();
-
-                    adapter.NotifyDataSetChanged();
-                }
-                catch
-                { }
-
-                try
-                {
-                    // Load
-                    Thread thread = new Thread(() => loadAsync());
-                    ActivityContext.mActivity.RunOnUiThread(() => thread.Start());
-                }
-                catch { }
-            }
         }
 
         public async void loadAsync()
