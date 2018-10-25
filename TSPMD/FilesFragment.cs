@@ -176,48 +176,7 @@ namespace TSPMD
                 {
                     var file = TagLib.File.Create(item);
 
-                    var duration = file.Properties.Duration.ToString().Replace("00:00", "00:")
-                                       .Replace("::", ":")
-                                       .Replace("00:1", "0:1")
-                                       .Replace("00:2", "0:2")
-                                       .Replace("00:3", "0:3")
-                                       .Replace("00:4", "0:4")
-                                       .Replace("00:5", "0:5")
-                                       .Replace("00:6", "0:6")
-                                       .Replace("00:7", "0:7")
-                                       .Replace("00:8", "0:8")
-                                       .Replace("00:9", "0:9")
-                                       .Replace("00:", "")
-                                       .Replace("01:", "1:")
-                                       .Replace("02:", "2:")
-                                       .Replace("03:", "3:")
-                                       .Replace("04:", "4:")
-                                       .Replace("05:", "5:")
-                                       .Replace("06:", "6:")
-                                       .Replace("07:", "7:")
-                                       .Replace("08:", "8:")
-                                       .Replace("09:", "9:")
-                                       .Substring(0, 5)
-                                       .Replace(".", "");
-
-                    int count = duration.Count(c => c == ':');
-
-                    if (count > 1)
-                    {
-                        duration = file.Properties.Duration.ToString().Replace("00:00", "00:")
-                                       .Replace("00:", "")
-                                       .Replace("01:", "1:")
-                                       .Replace("02:", "2:")
-                                       .Replace("03:", "3:")
-                                       .Replace("04:", "4:")
-                                       .Replace("05:", "5:")
-                                       .Replace("06:", "6:")
-                                       .Replace("07:", "7:")
-                                       .Replace("08:", "8:")
-                                       .Replace("09:", "9:")
-                                       .Substring(0, 5)
-                                       .Replace(".", "");
-                    }
+                    var duration = file.Properties.Duration.ToString();
 
                     // Add values to ListView
                     items.Add(new ListViewItem()
