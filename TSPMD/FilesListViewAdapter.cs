@@ -109,6 +109,14 @@ namespace TSPMD
             else
                 txtMediaType.Text = "Video";
 
+            // Duration
+            TextView txtDuration = row.FindViewById<TextView>(Resource.Id.textViewDuration_);
+
+            if (items_[position].Duration.Length > 8)
+                txtDuration.Text = items_[position].Duration.Substring(0, 8);
+            else
+                txtDuration.Text = items_[position].Duration;
+
             // Play
             Button buttonPlay = row.FindViewById<Button>(Resource.Id.buttonRowPlay_);
 
@@ -116,6 +124,10 @@ namespace TSPMD
 
             localPlay.HandleOnClick = () =>
             {
+#if DEBUG
+                Console.WriteLine(valueUrl);
+#endif
+
                 Thread thread = new Thread(() => play(valueUrl, position));
                 thread.Start();
             };

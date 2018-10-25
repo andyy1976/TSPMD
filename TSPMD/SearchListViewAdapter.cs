@@ -29,7 +29,8 @@ using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
-
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using Square.Picasso;
 
 namespace TSPMD
@@ -173,6 +174,11 @@ namespace TSPMD
 
             localDownload.HandleOnClick = () =>
             {
+                // Request permissions
+#pragma warning disable CS4014
+                ActivityContext.mActivity.RunOnUiThread(() => requestPermissionsAsync());
+#pragma warning restore CS4014
+
                 ActivityContext.mActivity.RunOnUiThread(delegate
                 {
                     if (valueUrl.Contains("youtube"))
@@ -211,6 +217,47 @@ namespace TSPMD
             buttonDownload.SetOnClickListener(localDownload);
 
             return row;
+        }
+
+        async System.Threading.Tasks.Task requestPermissionsAsync()
+        {
+            await permissionsAsync();
+        }
+
+        // Permissions
+        private async System.Threading.Tasks.Task permissionsAsync()
+        {
+            try
+            {
+                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+
+                if (status != PermissionStatus.Granted)
+                {
+                    if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage))
+                    {
+#if DEBUG
+                        Console.WriteLine("Request permissions");
+#endif
+                    }
+
+                    var results = await CrossPermissions.Current.RequestPermissionsAsync(new[] { Permission.Storage });
+                    status = results[Permission.Storage];
+                }
+
+                if (status == PermissionStatus.Granted)
+                {
+#if DEBUG
+                    Console.WriteLine("Permission granted");
+#endif
+                }
+                else if (status != PermissionStatus.Unknown)
+                {
+#if DEBUG
+                    Console.WriteLine("Permission denied");
+#endif
+                }
+            }
+            catch { }
         }
 
         /// <summary>

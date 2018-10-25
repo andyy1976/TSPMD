@@ -25,6 +25,10 @@ using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
 using Android.Support.V7.App;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
+using System;
+using System.Threading.Tasks;
 
 namespace TSPMD
 {
@@ -67,6 +71,11 @@ namespace TSPMD
             fragmentSearch.Replace(Resource.Id.fragment_container, SearchFragment);
             fragmentSearch.AddToBackStack(null);
             fragmentSearch.Commit();
+
+            // Request permissions
+#pragma warning disable CS4014
+            requestPermissionsAsync();
+#pragma warning restore CS4014
         }
 
         void NavigationView_NavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)
@@ -107,6 +116,49 @@ namespace TSPMD
 
             // Close drawer
             drawerLayout.CloseDrawers();
+        }
+
+        async Task requestPermissionsAsync()
+        {
+            await Task.Delay(2500);
+
+            await permissionsAsync();
+        }
+
+        // Permissions
+        private async Task permissionsAsync()
+        {
+            try
+            {
+                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+
+                if (status != PermissionStatus.Granted)
+                {
+                    if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage))
+                    {
+#if DEBUG
+                        Console.WriteLine("Request permissions");
+#endif
+                    }
+
+                    var results = await CrossPermissions.Current.RequestPermissionsAsync(new[] { Permission.Storage });
+                    status = results[Permission.Storage];
+                }
+
+                if (status == PermissionStatus.Granted)
+                {
+#if DEBUG
+                    Console.WriteLine("Permission granted");
+#endif
+                }
+                else if (status != PermissionStatus.Unknown)
+                {
+#if DEBUG
+                    Console.WriteLine("Permission denied");
+#endif
+                }
+            }
+            catch { }
         }
     }
 }

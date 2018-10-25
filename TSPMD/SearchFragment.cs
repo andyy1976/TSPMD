@@ -790,8 +790,9 @@ namespace TSPMD
 
                         foreach (var item in ytitems)
                         {
-                            if (!String.IsNullOrEmpty(item.getDuration()) && 
-                                !String.IsNullOrEmpty(item.getDuration()))
+                            if (!String.IsNullOrEmpty(item.getTitle()) && 
+                                !String.IsNullOrEmpty(item.getDuration()) &&
+                                item.getDuration() != " ")
                             {
                                 // Add items
                                 items.Add(new ListViewItem()
