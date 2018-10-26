@@ -68,7 +68,7 @@ namespace TSPMD
 
         DotsLoaderView dotsLoaderView;
 
-        static readonly string CHANNEL_ID = "location_notification";
+        static readonly string CHANNEL_ID = "tspmd_location_notification";
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {

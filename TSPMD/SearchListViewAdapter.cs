@@ -268,107 +268,117 @@ namespace TSPMD
         /// <param name="position"></param>
         private void play(string valueUrl, string title, int position, bool isVideo)
         {
-            var tube = string.Empty;
-
-            if (valueUrl.Contains("youtube"))
-                tube = "YouTube";
-            else if (valueUrl.Contains("ccmixter"))
-                tube = "ccMixter";
-            else if (valueUrl.Contains("dailymotion"))
-                tube = "Dailymotion";
-            else if (valueUrl.Contains("eroprofile"))
-                tube = "Eroprofile";
-            else if (valueUrl.Contains("pornhub"))
-                tube = "Pornhub";
-            else if (valueUrl.Contains("vimeo"))
-                tube = "Vimeo";
-            else if (valueUrl.Contains("xhamster"))
-                tube = "xHamster";
-
-            var mediaUrl = string.Empty;
-
-            switch (tube)
+            try
             {
-                case "YouTube":
-                    IEnumerable<VideoInfo> videoInfos = DownloadUrlResolver.GetDownloadUrls(valueUrl, false);
+                var tube = string.Empty;
 
-                    VideoInfo video = null;
+                if (valueUrl.Contains("youtube"))
+                    tube = "YouTube";
+                else if (valueUrl.Contains("ccmixter"))
+                    tube = "ccMixter";
+                else if (valueUrl.Contains("dailymotion"))
+                    tube = "Dailymotion";
+                else if (valueUrl.Contains("eroprofile"))
+                    tube = "Eroprofile";
+                else if (valueUrl.Contains("pornhub"))
+                    tube = "Pornhub";
+                else if (valueUrl.Contains("vimeo"))
+                    tube = "Vimeo";
+                else if (valueUrl.Contains("xhamster"))
+                    tube = "xHamster";
 
-                    if (isVideo)
-                    {
-                        video = videoInfos
-                            .First(info => info.VideoType == VideoType.Mp4 && info.AudioBitrate == 192); // mp4 video
-                    }
-                    else
-                    {
-                        video = videoInfos
-                            .First(info => info.VideoType == VideoType.Mobile); // 3gp
-                    }
+                var mediaUrl = string.Empty;
 
-                    if (video.RequiresDecryption)
-                    {
-                        DownloadUrlResolver.DecryptDownloadUrl(video);
-                    }
-
-                    mediaUrl = video.DownloadUrl;
-                    break;
-                case "ccMixter":
-                    mediaUrl = ccMixterExtractor.DownloadUrl(valueUrl);
-                    break;
-                case "Dailymotion":
-                    mediaUrl = DailymotionExtractor.DownloadUrl(valueUrl);
-                    break;
-                case "Eroprofile":
-                    mediaUrl = EroprofileExtractor.DownloadUrl(valueUrl);
-                    break;
-                case "Pornhub":
-                    var phitems = PornhubExtractor.Query(valueUrl);
-
-                    foreach (var item in phitems)
-                    {
-                        if (!String.IsNullOrEmpty(item.getUrl()))
-                            mediaUrl = item.getUrl();
-                    }
-                    break;
-                case "Vimeo":
-                    mediaUrl = VimeoExtractor.DownloadUrl(valueUrl);
-                    break;
-                case "xHamster":
-                    var xhitmes = xHamsterExtractor.Query(valueUrl);
-
-                    foreach (var item in xhitmes)
-                    {
-                        if (!String.IsNullOrEmpty(item.getUrl()))
-                            mediaUrl = item.getUrl();
-                    }
-                    break;
-                default:
-                    return;
-            }
-
-#if DEBUG
-            Console.WriteLine("Media url: " + mediaUrl);
-#endif
-
-            if (String.IsNullOrEmpty(mediaUrl))
-            {
-#if DEBUG
-                Console.WriteLine("File not found", title);
-#endif
-                searchActivity_.publishnotification("File not found", title, searchActivity_.uniquenotificationID());
-            }
-            else
-            {
-                if (isVideo)
+                switch (tube)
                 {
-                    var intent = new Intent(ActivityContext.mActivity, typeof(VideoPlayerActivity));
-                    intent.PutExtra("url", mediaUrl);
-                    intent.PutExtra("title", title);
-                    ActivityContext.mActivity.StartActivity(intent);
+                    case "YouTube":
+                        IEnumerable<VideoInfo> videoInfos = DownloadUrlResolver.GetDownloadUrls(valueUrl, false);
+
+                        VideoInfo video = null;
+
+                        if (isVideo)
+                        {
+                            video = videoInfos
+                                .First(info => info.VideoType == VideoType.Mp4 && info.AudioBitrate == 192); // mp4 video
+                        }
+                        else
+                        {
+                            video = videoInfos
+                                .First(info => info.VideoType == VideoType.Mobile); // 3gp
+                        }
+
+                        if (video.RequiresDecryption)
+                        {
+                            DownloadUrlResolver.DecryptDownloadUrl(video);
+                        }
+
+                        mediaUrl = video.DownloadUrl;
+                        break;
+                    case "ccMixter":
+                        mediaUrl = ccMixterExtractor.DownloadUrl(valueUrl);
+                        break;
+                    case "Dailymotion":
+                        mediaUrl = DailymotionExtractor.DownloadUrl(valueUrl);
+                        break;
+                    case "Eroprofile":
+                        mediaUrl = EroprofileExtractor.DownloadUrl(valueUrl);
+                        break;
+                    case "Pornhub":
+                        var phitems = PornhubExtractor.Query(valueUrl);
+
+                        foreach (var item in phitems)
+                        {
+                            if (!String.IsNullOrEmpty(item.getUrl()))
+                                mediaUrl = item.getUrl();
+                        }
+                        break;
+                    case "Vimeo":
+                        mediaUrl = VimeoExtractor.DownloadUrl(valueUrl);
+                        break;
+                    case "xHamster":
+                        var xhitmes = xHamsterExtractor.Query(valueUrl);
+
+                        foreach (var item in xhitmes)
+                        {
+                            if (!String.IsNullOrEmpty(item.getUrl()))
+                                mediaUrl = item.getUrl();
+                        }
+                        break;
+                    default:
+                        return;
+                }
+
+#if DEBUG
+                Console.WriteLine("Media url: " + mediaUrl);
+#endif
+
+                if (String.IsNullOrEmpty(mediaUrl))
+                {
+#if DEBUG
+                    Console.WriteLine("File not found", title);
+#endif
+                    searchActivity_.publishnotification("File not found", title, searchActivity_.uniquenotificationID());
                 }
                 else
-                    mediaplayer(mediaUrl, position);
-            }    
+                {
+                    if (isVideo)
+                    {
+                        var intent = new Intent(ActivityContext.mActivity, typeof(VideoPlayerActivity));
+                        intent.PutExtra("url", mediaUrl);
+                        intent.PutExtra("title", title);
+                        ActivityContext.mActivity.StartActivity(intent);
+                    }
+                    else
+                        mediaplayer(mediaUrl, position);
+                }
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                Console.WriteLine(ex.ToString());
+#endif
+                Toast.MakeText(ActivityContext.mActivity, "Parsing error", ToastLength.Long).Show();
+            }
         }
 
         /// <summary>
