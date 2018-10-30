@@ -63,6 +63,9 @@ namespace TSPMD
             var url = Intent.GetStringExtra("url") ?? "Not available";
             var title = Intent.GetStringExtra("title") ?? "Not available";
 
+            Log.println("Video player: " + url);
+            Log.println("Video player: " + title);
+
             videoPlayer.SetVideoURI(Android.Net.Uri.Parse(url));
             mediaController = new MediaController(this, true);
             videoPlayer.SetMediaController(mediaController);

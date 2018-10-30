@@ -128,6 +128,8 @@ namespace TSPMD
                 Console.WriteLine(valueUrl);
 #endif
 
+                Log.println(valueUrl);
+
                 Thread thread = new Thread(() => play(valueUrl, position));
                 thread.Start();
             };
@@ -169,9 +171,13 @@ namespace TSPMD
             Console.WriteLine("Start player");
 #endif
 
+            Log.println("Start player");
+
 #if DEBUG
             Console.WriteLine(url);
 #endif
+
+            Log.println(url);
 
             if (string.IsNullOrEmpty(url))
                 return;
@@ -221,6 +227,8 @@ namespace TSPMD
 #if DEBUG
                         Console.WriteLine("Player resetted");
 #endif
+                        Log.println("Player resetted");
+
                     }
 
                     if (mpHandler != null)
@@ -236,6 +244,8 @@ namespace TSPMD
 #if DEBUG
                         Console.WriteLine("Player finished");
 #endif
+
+                        Log.println("Player finished");
                     }
                 };
             }
@@ -257,6 +267,8 @@ namespace TSPMD
 #if DEBUG
                 Console.WriteLine("Player finished");
 #endif
+
+                Log.println("Player finished");
             };
 
             mp.SetDataSource(url);
@@ -269,12 +281,16 @@ namespace TSPMD
 #if DEBUG
                 Console.WriteLine("Player prepared");
 #endif
+
+                Log.println("Player prepared");
             }
-            catch
+            catch (Exception ex)
             {
 #if DEBUG
                 Console.WriteLine("Prepairing failed");
 #endif
+
+                Log.println(ex.ToString());
             }
         }
 
@@ -304,6 +320,8 @@ namespace TSPMD
 #if DEBUG
             Console.WriteLine("Player started");
 #endif
+
+            Log.println("Player started");
         }
     }
 }

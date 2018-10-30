@@ -21,7 +21,6 @@
  ****************************************************************************/
 
 using System;
-using System.IO;
 
 namespace TSPMD
 {
@@ -41,47 +40,7 @@ namespace TSPMD
 
         public static void println(String Message)
         {
-#if DEBUG
             Console.WriteLine("[" + DateTime.Now + "]" + " " + Message);
-#endif
-
-            try
-            {
-                // Directory
-                // Personal folder path
-                string documentsPath = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDocuments).AbsolutePath;
-
-                // Data folder path
-                string dataPath = Path.Combine(documentsPath, "TSPMD");
-
-                if (!Directory.Exists(dataPath))
-                {
-                    Directory.CreateDirectory(dataPath);
-                }
-
-                // Logfile
-                dataPath = Path.Combine(dataPath, "log");
-
-                if (!Directory.Exists(dataPath))
-                {
-                    Directory.CreateDirectory(dataPath);
-                }
-
-                if (!File.Exists(Path.Combine(dataPath, "log.txt")))
-                {
-                    using (File.Create(Path.Combine(dataPath, "log.txt")))
-                    { };
-                }
-
-                File.AppendAllText(Path.Combine(dataPath, "log.txt"), "[" + DateTime.Now + "]" + " " + Message + Environment.NewLine);
-            }
-            catch (Exception ex)
-            {
-#if DEBUG
-                Console.WriteLine("[" + DateTime.Now + "]" + " " + ex.ToString());
-#endif
-            }
-
         }
     }
 }

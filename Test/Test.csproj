@@ -16,7 +16,6 @@
     <Folder Include="Helper\" />
     <Folder Include="InstagramPictureExtractor\" />
     <Folder Include="InstagramVideoExtractor\" />
-    <Folder Include="Log\" />
     <Folder Include="Metadata\" />
     <Folder Include="PornhubExtractor\" />
     <Folder Include="PornhubSearch\" />
@@ -67,9 +66,6 @@
     </Compile>
     <Compile Include="..\TSPMD\InstagramVideoExtractor\InstagramVideoExtractor.cs">
       <Link>InstagramVideoExtractor\InstagramVideoExtractor.cs</Link>
-    </Compile>
-    <Compile Include="..\TSPMD\Log\Log.cs">
-      <Link>Log\Log.cs</Link>
     </Compile>
     <Compile Include="..\TSPMD\Metadata\Metadata.cs">
       <Link>Metadata\Metadata.cs</Link>

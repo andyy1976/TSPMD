@@ -68,7 +68,7 @@ namespace TSPMD
 
         DotsLoaderView dotsLoaderView;
 
-        static readonly string CHANNEL_ID = "tspmd_location_notification";
+        static readonly string CHANNEL_ID = "location_notification";
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -165,6 +165,8 @@ namespace TSPMD
 #if DEBUG
                     Console.WriteLine("Player resetted");
 #endif
+
+                    Log.println("Player resetted");
                 }
 
                 if (mpHandler != null)
@@ -180,6 +182,8 @@ namespace TSPMD
 #if DEBUG
                     Console.WriteLine("Player stopped");
 #endif
+
+                    Log.println("Player stopped");
                 }
             };
 
@@ -199,6 +203,8 @@ namespace TSPMD
 #if DEBUG
             Console.WriteLine("App is loaded");
 #endif
+
+            Log.println("App is loaded");
 
             CreateNotificationChannel();
 
@@ -241,6 +247,8 @@ namespace TSPMD
 #if DEBUG
                     Console.WriteLine("Permission granted");
 #endif
+
+                    Log.println("Permission granted");
                 }
                 else if (status != PermissionStatus.Unknown)
                 {
@@ -290,8 +298,8 @@ namespace TSPMD
                 return;
             }
 
-            var name = "TSPMD Local Notifications";
-            var description = "TSPMD Local Notifications";
+            var name = "Local Notifications";
+            var description = "Local Notifications";
             var channel = new NotificationChannel(CHANNEL_ID, name, NotificationImportance.Default)
             {
                 Description = description
@@ -333,6 +341,8 @@ namespace TSPMD
 #if DEBUG
             Console.WriteLine("Notification published: " + notificationID);
 #endif
+
+            Log.println("Notification published: " + notificationID);
         }
 
         /// <summary>
@@ -367,6 +377,8 @@ namespace TSPMD
             Console.WriteLine("Notification published: " + notificationID);
 #endif
 
+            Log.println("Notification published: " + notificationID);
+
             return builder;
         }
 
@@ -377,6 +389,8 @@ namespace TSPMD
 #if DEBUG
             Console.WriteLine("NotificationID: " + notificationID);
 #endif
+
+            Log.println("Notification published: " + notificationID);
 
             return notificationID;
         }
@@ -396,6 +410,8 @@ namespace TSPMD
             {
                 ActivityContext.mActivity.RunOnUiThread(() =>
                 Toast.MakeText(ActivityContext.mActivity, "No media found", ToastLength.Long).Show());
+
+                Log.println("No media found");
             }
         }
 
@@ -495,6 +511,8 @@ namespace TSPMD
                 Console.WriteLine("File not found", title);
 #endif
 
+                Log.println("File not found: " + title);
+
                 publishnotification("File not found", title, uniquenotificationID());
                 return;
             }
@@ -502,6 +520,8 @@ namespace TSPMD
 #if DEBUG
             Console.WriteLine(mediaUrl);
 #endif
+
+            Log.println(mediaUrl);
 
             // Check if media url has some value
             if (mediaUrl != null && mediaTitle != null)
@@ -512,12 +532,16 @@ namespace TSPMD
 #if DEBUG
                 Console.WriteLine("Start download");
 #endif
+
+                Log.println("Start download");
             }
             else
             {
 #if DEBUG
                 Console.WriteLine("File not found", title);
 #endif
+                Log.println("File not found: " + title);
+
                 publishnotification("File not found", title, uniquenotificationID());
                 return;
             }
@@ -587,11 +611,15 @@ namespace TSPMD
             Console.WriteLine(file);
 #endif
 
+            Log.println(file);
+
             DownloadFile.DownloadFileAsync(new Uri(URL), file, file + "|" + Title + "|" + notificationID);
 
 #if DEBUG
             Console.WriteLine("Download started");
 #endif
+
+            Log.println("Download started");
         }
 
         /// <summary>
@@ -622,6 +650,8 @@ namespace TSPMD
 #if DEBUG
             Console.WriteLine(e.ProgressPercentage + " %");
 #endif
+
+            Log.println(e.ProgressPercentage + " %");
         }
 
         /// <summary>
@@ -698,12 +728,16 @@ namespace TSPMD
 #if DEBUG
                 Console.WriteLine("Tags written");
 #endif
+
+                Log.println("Tags written");
             }
-            catch
+            catch (Exception ex)
             {
 #if DEBUG
                 Console.WriteLine("Failed to write tags");
 #endif
+
+                Log.println(ex.ToString());
             }
 
             try
@@ -718,6 +752,8 @@ namespace TSPMD
 #if DEBUG
             Console.WriteLine("Download completed");
 #endif
+
+            Log.println("Download completed");
         }
 
         #endregion Download
@@ -781,6 +817,8 @@ namespace TSPMD
         {
             try
             {
+                Log.println("Search, tube: " + tube + ", search string: " + value);
+
                 ActivityContext.mActivity.RunOnUiThread(() => dotsLoaderView.Show());
                 
                 switch (tube)
@@ -915,6 +953,9 @@ namespace TSPMD
 #if DEBUG
                 Console.WriteLine(ex.ToString());
 #endif
+
+                Log.println(ex.ToString());
+
                 ActivityContext.mActivity.RunOnUiThread(() => dotsLoaderView.Hide());
 
                 return false;

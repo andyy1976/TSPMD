@@ -76,6 +76,9 @@ namespace TSPMD
 #pragma warning disable CS4014
             requestPermissionsAsync();
 #pragma warning restore CS4014
+
+            // Enable log
+            Log.setMode(true);
         }
 
         void NavigationView_NavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)
@@ -149,6 +152,8 @@ namespace TSPMD
                 {
 #if DEBUG
                     Console.WriteLine("Permission granted");
+
+                    Log.println("Permission granted");
 #endif
                 }
                 else if (status != PermissionStatus.Unknown)

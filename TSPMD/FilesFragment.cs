@@ -98,6 +98,8 @@ namespace TSPMD
 #if DEBUG
                     Console.WriteLine("Player resetted");
 #endif
+
+                    Log.println("Player resetted");
                 }
 
                 if (mpHandler != null)
@@ -113,6 +115,8 @@ namespace TSPMD
 #if DEBUG
                     Console.WriteLine("Player stopped");
 #endif
+
+                    Log.println("Player stopped");
                 }
             };
 
@@ -191,11 +195,14 @@ namespace TSPMD
 #endif
                 }
             }
-            catch
+            catch (Exception ex)
             {
 #if DEBUG
                 Console.WriteLine("Parsing error");
 #endif
+
+                Log.println(ex.ToString());
+
                 try
                 {
                     ActivityContext.mActivity.RunOnUiThread(() => adapter.NotifyDataSetChanged());
@@ -239,6 +246,8 @@ namespace TSPMD
 #if DEBUG
                     Console.WriteLine("Permission granted");
 #endif
+
+                    Log.println("Permission granted");
                 }
                 else if (status != PermissionStatus.Unknown)
                 {
