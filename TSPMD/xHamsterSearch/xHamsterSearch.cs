@@ -45,8 +45,10 @@ namespace TSPMD
                 // Search address
                 string content = Web.getContentFromUrlWithProperty("https://xhamster.com/search?q=" + querystring.Replace(" ", "+") + "&p=" + i);
 
+#if DEBUG
                 if (Log.getMode())
                     Log.println("Content: " + content);
+#endif
 
                 // Search string
                 string pattern = "<div class=\"thumb-list__item video-thumb\">.*?</div> </div>";

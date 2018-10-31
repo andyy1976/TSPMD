@@ -45,8 +45,10 @@ namespace TSPMD
                 // Search address
                 string content = Web.getContentFromUrlWithProperty("https://pornhub.com/video/search?search=" + querystring.Replace(" ", "+") + "&page=" + i);
 
+#if DEBUG
                 if (Log.getMode())
                     Log.println("Content: " + content);
+#endif
 
                 // Search string
                 string pattern = "<div class=\"wrap\">.*?<var class=\"duration\">.*?</var>";

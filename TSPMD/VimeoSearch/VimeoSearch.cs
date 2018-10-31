@@ -46,8 +46,10 @@ namespace TSPMD
                 // Search address
                 string content = Web.getContentFromUrlWithProperty("https://www.vimeo.com/search/page:" + i + "?q=" + querystring.Replace(" ", "+"));
 
+#if DEBUG
                 if (Log.getMode())
                     Log.println("Content: " + content);
+#endif
 
                 // Search string
                 string pattern = "\"uri\":.*?clip\",\"clip";

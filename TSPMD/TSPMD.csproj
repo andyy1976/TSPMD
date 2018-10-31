@@ -173,6 +173,8 @@
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchFragment.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="SettingsFragment.cs" />
     <Compile Include="VideoPlayerActivity.cs" />
     <Compile Include="VimeoExtractor\VimeoExtractor.cs" />
     <Compile Include="VimeoSearch\VimeoSearch.cs" />
@@ -199,6 +201,9 @@
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
+    <AndroidResource Include="Resources\layout\Settings.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\strings.xml" />
@@ -238,6 +243,7 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\Icon1.png" />
+    <AndroidResource Include="Resources\drawable\Settings.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

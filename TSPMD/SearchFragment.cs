@@ -322,21 +322,30 @@ namespace TSPMD
             // Generate notification
             Intent notificationIntent = new Intent(ActivityContext.mActivity, typeof(MainActivity));
 
-            TaskStackBuilder stackBuilder = TaskStackBuilder.Create(ActivityContext.mActivity);
+            Android.Support.V4.App.TaskStackBuilder stackBuilder = Android.Support.V4.App.TaskStackBuilder.Create(ActivityContext.mActivity);
             stackBuilder.AddParentStack(Java.Lang.Class.FromType(typeof(MainActivity)));
             stackBuilder.AddNextIntent(notificationIntent);
 
-            PendingIntent contentIntent = stackBuilder.GetPendingIntent(0, PendingIntentFlags.UpdateCurrent);
+            PendingIntent contentIntent = stackBuilder.GetPendingIntent(0, (int) PendingIntentFlags.UpdateCurrent);
 
-            Notification.Builder builder = new Notification.Builder(ActivityContext.mActivity, CHANNEL_ID)
+            // Instantiate the builder and set notification elements, including
+            // the pending intent:
+            Android.Support.V4.App.NotificationCompat.Builder builder = new Android.Support.V4.App.NotificationCompat.Builder(ActivityContext.mActivity, CHANNEL_ID)
                 .SetContentTitle(title)
                 .SetContentText(text)
                 .SetSmallIcon(Resource.Drawable.Icon)
                 .SetAutoCancel(true)
                 .SetContentIntent(contentIntent);
 
-            NotificationManager notificationManager = (NotificationManager)ActivityContext.mActivity.GetSystemService(Context.NotificationService);
-            notificationManager.Notify(notificationID, builder.Build());
+            // Build the notification:
+            Notification notification = builder.Build();
+
+            // Get the notification manager:
+            NotificationManager notificationManager =
+                ActivityContext.mActivity.GetSystemService(Context.NotificationService) as NotificationManager;
+
+            // Publish the notification:
+            notificationManager.Notify(notificationID, notification);
 
 #if DEBUG
             Console.WriteLine("Notification published: " + notificationID);
@@ -352,26 +361,35 @@ namespace TSPMD
         /// <param name="text"></param>
         /// <param name="notificationID"></param>
         /// <returns></returns>
-        private Notification.Builder publishnotification_(string title, string text, int notificationID)
+        private Android.Support.V4.App.NotificationCompat.Builder publishnotification_(string title, string text, int notificationID)
         {
             // Generate notification
             Intent notificationIntent = new Intent(ActivityContext.mActivity, typeof(MainActivity));
 
-            TaskStackBuilder stackBuilder = TaskStackBuilder.Create(ActivityContext.mActivity);
+            Android.Support.V4.App.TaskStackBuilder stackBuilder = Android.Support.V4.App.TaskStackBuilder.Create(ActivityContext.mActivity);
             stackBuilder.AddParentStack(Java.Lang.Class.FromType(typeof(MainActivity)));
             stackBuilder.AddNextIntent(notificationIntent);
 
-            PendingIntent contentIntent = stackBuilder.GetPendingIntent(0, PendingIntentFlags.UpdateCurrent);
+            PendingIntent contentIntent = stackBuilder.GetPendingIntent(0, (int) PendingIntentFlags.UpdateCurrent);
 
-            Notification.Builder builder = new Notification.Builder(ActivityContext.mActivity, CHANNEL_ID)
+            // Instantiate the builder and set notification elements, including
+            // the pending intent:
+            Android.Support.V4.App.NotificationCompat.Builder builder = new Android.Support.V4.App.NotificationCompat.Builder(ActivityContext.mActivity, CHANNEL_ID)
                 .SetContentTitle(title)
                 .SetContentText(text)
                 .SetSmallIcon(Resource.Drawable.Icon)
                 .SetAutoCancel(true)
                 .SetContentIntent(contentIntent);
 
-            NotificationManager notificationManager = (NotificationManager)ActivityContext.mActivity.GetSystemService(Context.NotificationService);
-            notificationManager.Notify(notificationID, builder.Build());
+            // Build the notification:
+            Notification notification = builder.Build();
+
+            // Get the notification manager:
+            NotificationManager notificationManager =
+                ActivityContext.mActivity.GetSystemService(Context.NotificationService) as NotificationManager;
+
+            // Publish the notification:
+            notificationManager.Notify(notificationID, notification);
 
 #if DEBUG
             Console.WriteLine("Notification published: " + notificationID);
@@ -390,7 +408,7 @@ namespace TSPMD
             Console.WriteLine("NotificationID: " + notificationID);
 #endif
 
-            Log.println("Notification published: " + notificationID);
+            Log.println("NotificationID: " + notificationID);
 
             return notificationID;
         }
@@ -445,7 +463,11 @@ namespace TSPMD
                         if (isVideo)
                         {
                             video = videoInfos
-                                .First(info => info.VideoType == VideoType.Mp4 && info.AudioBitrate == 192); // mp4 video
+                                .First(info => info.VideoType == VideoType.Mp4 && info.AudioBitrate == 96); // mp4 video
+
+                            if (String.IsNullOrEmpty(video.DownloadUrl)) // Fallback
+                                video = videoInfos
+                                .First(info => info.VideoType == VideoType.Mp4 && info.AudioBitrate == 96 && info.Resolution == 240); // mp4 video
 
                             file_extension = ".mp4";
                         }
@@ -560,7 +582,7 @@ namespace TSPMD
             // Event when download progess changed
             int notificationID = uniquenotificationID();
 
-            Notification.Builder builder_ = publishnotification_("Downloading", Title, notificationID);
+            Android.Support.V4.App.NotificationCompat.Builder builder_ = publishnotification_("Downloading", Title, notificationID);
 
             DownloadFile.DownloadProgressChanged += (sender, e) => DownloadFileProgressChanged(sender, e, builder_);
 
@@ -628,7 +650,7 @@ namespace TSPMD
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <param name="builder_"></param>
-        private void DownloadFileProgressChanged(object sender, DownloadProgressChangedEventArgs e, Notification.Builder builder_)
+        private void DownloadFileProgressChanged(object sender, DownloadProgressChangedEventArgs e, Android.Support.V4.App.NotificationCompat.Builder builder_)
         {
             // Progress
             string s = e.UserState as String;
@@ -636,9 +658,17 @@ namespace TSPMD
 
             try
             {
-                // Notification
-                builder_.SetContentTitle("Downloading - " + e.ProgressPercentage + " %");
-                builder_.SetProgress(100, e.ProgressPercentage, false);
+                if (e.ProgressPercentage < 100)
+                {
+                    // Notification
+                    builder_.SetContentTitle("Downloading - " + e.ProgressPercentage + " %");
+                    builder_.SetProgress(100, e.ProgressPercentage, false);
+                }
+                else
+                {
+                    builder_.SetContentTitle("Download completed");
+                    builder_.SetProgress(100, e.ProgressPercentage, false);
+                }
 
                 NotificationManager notificationManager = (NotificationManager)ActivityContext.mActivity.GetSystemService(Context.NotificationService);
                 notificationManager.Notify(Convert.ToInt32(s_[2]), builder_.Build());
@@ -740,20 +770,11 @@ namespace TSPMD
                 Log.println(ex.ToString());
             }
 
-            try
-            {
-                publishnotification("Download completed", makeFilenameValid(filename), Convert.ToInt32(s_[2]));
-            }
-            catch
-            {
-
-            }
-
 #if DEBUG
-            Console.WriteLine("Download completed");
+                Console.WriteLine("Download completed, file: " + makeFilenameValid(filename)+ ", notification id: " + Convert.ToInt32(s_[2]));
 #endif
 
-            Log.println("Download completed");
+            Log.println("Download completed, file: " + makeFilenameValid(filename) + ", notification id: " + Convert.ToInt32(s_[2]));
         }
 
         #endregion Download
@@ -824,7 +845,7 @@ namespace TSPMD
                 switch (tube)
                 {
                     case "YouTube":
-                        var ytitems = YouTubeSearch.Query(value, 5);
+                        var ytitems = YouTubeSearch.Query(value, Convert.ToInt32(Settings.Retrieve("SearchPages")));
 
                         foreach (var item in ytitems)
                         {
@@ -845,7 +866,7 @@ namespace TSPMD
                         }
                         break;
                     case "ccMixter":
-                        var ccitems = ccMixterSearch.Query(value, 5);
+                        var ccitems = ccMixterSearch.Query(value, Convert.ToInt32(Settings.Retrieve("SearchPages")));
 
                         foreach (var item in ccitems)
                         {
@@ -859,7 +880,7 @@ namespace TSPMD
                         }
                         break;
                     case "Dailymotion":
-                        var dmitems = DailymotionSearch.Query(value, 5);
+                        var dmitems = DailymotionSearch.Query(value, Convert.ToInt32(Settings.Retrieve("SearchPages")));
 
                         foreach (var item in dmitems)
                         {
@@ -873,7 +894,7 @@ namespace TSPMD
                         }
                         break;
                     case "Eroprofile":
-                        var epitems = EroprofileSearch.Query(value, 5);
+                        var epitems = EroprofileSearch.Query(value, Convert.ToInt32(Settings.Retrieve("SearchPages")));
 
                         foreach (var item in epitems)
                         {
@@ -888,7 +909,7 @@ namespace TSPMD
                         }
                         break;
                     case "Pornhub":
-                        var phitems = PornhubSearch.Query(value, 5);
+                        var phitems = PornhubSearch.Query(value, Convert.ToInt32(Settings.Retrieve("SearchPages")));
 
                         foreach (var item in phitems)
                         {
@@ -903,7 +924,7 @@ namespace TSPMD
                         }
                         break;
                     case "Vimeo":
-                        var vmitems = VimeoSearch.Query(value, 5);
+                        var vmitems = VimeoSearch.Query(value, Convert.ToInt32(Settings.Retrieve("SearchPages")));
 
                         foreach (var item in vmitems)
                         {
@@ -919,7 +940,7 @@ namespace TSPMD
                         }
                         break;
                     case "xHamster":
-                        var xhitems = xHamsterSearch.Query(value, 5);
+                        var xhitems = xHamsterSearch.Query(value, Convert.ToInt32(Settings.Retrieve("SearchPages")));
 
                         foreach (var item in xhitems)
                         {

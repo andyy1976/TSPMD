@@ -79,6 +79,10 @@ namespace TSPMD
 
             // Enable log
             Log.setMode(true);
+
+            // Init Settings
+            if (String.IsNullOrEmpty(Settings.Retrieve("SearchPages")))
+                Settings.Save("SearchPages", "2");
         }
 
         void NavigationView_NavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)
@@ -101,6 +105,16 @@ namespace TSPMD
                     fragmentFiles.Replace(Resource.Id.fragment_container, FilesFragment);
                     fragmentFiles.AddToBackStack(null);
                     fragmentFiles.Commit();
+
+                    this.Title = "TSPMD";
+
+                    break;
+                case (Resource.Id.nav_settings): // Settings
+                    var SettingsFramgment = new SettingsFragment();
+                    var fragmentSettings = FragmentManager.BeginTransaction();
+                    fragmentSettings.Replace(Resource.Id.fragment_container, SettingsFramgment);
+                    fragmentSettings.AddToBackStack(null);
+                    fragmentSettings.Commit();
 
                     this.Title = "TSPMD";
 

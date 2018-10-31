@@ -301,7 +301,11 @@ namespace TSPMD
                         if (isVideo)
                         {
                             video = videoInfos
-                                .First(info => info.VideoType == VideoType.Mp4 && info.AudioBitrate == 192); // mp4 video
+                                .First(info => info.VideoType == VideoType.Mp4 && info.AudioBitrate == 96); // mp4 video
+
+                            if (String.IsNullOrEmpty(video.DownloadUrl)) // Fallback
+                                video = videoInfos
+                                .First(info => info.VideoType == VideoType.Mp4 && info.AudioBitrate == 96 && info.Resolution == 240); // mp4 video
                         }
                         else
                         {
@@ -353,6 +357,8 @@ namespace TSPMD
 #if DEBUG
                 Console.WriteLine("Media url: " + mediaUrl);
 #endif
+
+                Log.println("Media url: " + mediaUrl);
 
                 if (String.IsNullOrEmpty(mediaUrl))
                 {

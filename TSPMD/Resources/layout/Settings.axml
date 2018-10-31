@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewSearchPages"
+        android:layout_marginTop="85dp"
+        android:layout_marginLeft="5dp"
+        android:singleLine="true"
+        android:text="Number of pages to be searched:" />
+    <EditText
+        android:layout_width="100px"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextSearchPages"
+        android:singleLine="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toLeftOf="@id/textViewSearchPages"
+        android:layout_alignTop="@id/textViewSearchPages" />
+    <Button
+        android:text="Save"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonSave"
+        android:layout_toLeftOf="@id/editTextSearchPages"
+        android:layout_alignTop="@id/editTextSearchPages"
+        android:layout_marginRight="5dp" />
+</LinearLayout>

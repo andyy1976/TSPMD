@@ -3,58 +3,58 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-	<RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="The Simple Pocket Media Downloader"
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignParentTop="true"
-					android:layout_marginTop="87dp"
-					android:textStyle="bold"
-                    android:textSize="13sp" />
-                <ImageView
-                    android:id="@+id/logo"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:contentDescription="Icon"
-					android:layout_marginTop="67dp"
-                    android:focusable="true"
-                    android:clickable="true"
-					android:layout_marginLeft="5dp"
-                    android:src="@drawable/icon1" />
-            </RelativeLayout>
-	<TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:text="TSPMD is an audio and video donwloader app for android. It supports various tubes."
-                android:textSize="16sp" />
-	<TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
-                android:gravity="center|top"
-                android:text="Copyright © 2018 by Torsten Klinger."
-                android:textSize="14sp" />
-	<TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-				android:layout_marginTop="22dp"
-                android:gravity="center"
-                android:text="Version 0.1"
-                android:textSize="12sp" />
-	<TextView
-                android:id="@+id/main_link"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
-                android:autoLink="web"
-                android:gravity="center"
-                android:text="http://www.twitter.com/mrklintscher"
-                android:textSize="14sp" />
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="The Simple Pocket Media Downloader"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="87dp"
+            android:textStyle="bold"
+            android:textSize="13sp" />
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="Icon"
+            android:layout_marginTop="67dp"
+            android:focusable="true"
+            android:clickable="true"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/icon1" />
+    </RelativeLayout>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="TSPMD is an audio and video donwloader app for android. It supports various tubes."
+        android:textSize="16sp" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:gravity="center|top"
+        android:text="Copyright © 2018 by Torsten Klinger."
+        android:textSize="14sp" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:gravity="center"
+        android:text="Version 0.1"
+        android:textSize="12sp" />
+    <TextView
+        android:id="@+id/main_link"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:autoLink="web"
+        android:gravity="center"
+        android:text="http://www.twitter.com/mrklintscher"
+        android:textSize="14sp" />
 </LinearLayout>

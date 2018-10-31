@@ -11,6 +11,10 @@
 				android:title="Files"
 				android:id="@+id/nav_files" />
       <item
+       android:icon="@drawable/Settings"
+       android:title="Settings"
+       android:id="@+id/nav_settings" />
+      <item
         android:icon="@drawable/About"
 				android:title="About"
 				android:id="@+id/nav_about" />

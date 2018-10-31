@@ -95,9 +95,9 @@ namespace TSPMD
                         Log.println("********************************");
 
                     // Remove playlists
-                    if (title != "__title__")
+                    if (title != "__title__" && title != " ")
                     {
-                        if (duration != "")
+                        if (duration != "" && duration != " ")
                         {
                             // Add item to list
                             items.Add(new YouTubeSearchComponents(title, author, description, duration, url, thumbnail));

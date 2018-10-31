@@ -43,8 +43,10 @@ namespace TSPMD
 
             try
             {
+#if DEBUG
                 if (Log.getMode())
                     Log.println("Source : " + content);
+#endif
 
                 var obj = JObject.Parse(content.ToString());
 

@@ -2258,26 +2258,26 @@ namespace TSPMD
 			// aapt resource value: 0x7f020054
 			public const int avd_hide_password = 2130837588;
 			
-			// aapt resource value: 0x7f020070
-			public const int avd_hide_password_1 = 2130837616;
-			
 			// aapt resource value: 0x7f020071
-			public const int avd_hide_password_2 = 2130837617;
+			public const int avd_hide_password_1 = 2130837617;
 			
 			// aapt resource value: 0x7f020072
-			public const int avd_hide_password_3 = 2130837618;
+			public const int avd_hide_password_2 = 2130837618;
+			
+			// aapt resource value: 0x7f020073
+			public const int avd_hide_password_3 = 2130837619;
 			
 			// aapt resource value: 0x7f020055
 			public const int avd_show_password = 2130837589;
 			
-			// aapt resource value: 0x7f020073
-			public const int avd_show_password_1 = 2130837619;
-			
 			// aapt resource value: 0x7f020074
-			public const int avd_show_password_2 = 2130837620;
+			public const int avd_show_password_1 = 2130837620;
 			
 			// aapt resource value: 0x7f020075
-			public const int avd_show_password_3 = 2130837621;
+			public const int avd_show_password_2 = 2130837621;
+			
+			// aapt resource value: 0x7f020076
+			public const int avd_show_password_3 = 2130837622;
 			
 			// aapt resource value: 0x7f020056
 			public const int circle_background = 2130837590;
@@ -2336,11 +2336,11 @@ namespace TSPMD
 			// aapt resource value: 0x7f020068
 			public const int notification_icon_background = 2130837608;
 			
-			// aapt resource value: 0x7f02006e
-			public const int notification_template_icon_bg = 2130837614;
-			
 			// aapt resource value: 0x7f02006f
-			public const int notification_template_icon_low_bg = 2130837615;
+			public const int notification_template_icon_bg = 2130837615;
+			
+			// aapt resource value: 0x7f020070
+			public const int notification_template_icon_low_bg = 2130837616;
 			
 			// aapt resource value: 0x7f020069
 			public const int notification_tile_bg = 2130837609;
@@ -2352,10 +2352,13 @@ namespace TSPMD
 			public const int Search = 2130837611;
 			
 			// aapt resource value: 0x7f02006c
-			public const int tooltip_frame_dark = 2130837612;
+			public const int Settings = 2130837612;
 			
 			// aapt resource value: 0x7f02006d
-			public const int tooltip_frame_light = 2130837613;
+			public const int tooltip_frame_dark = 2130837613;
+			
+			// aapt resource value: 0x7f02006e
+			public const int tooltip_frame_light = 2130837614;
 			
 			static Drawable()
 			{
@@ -2496,6 +2499,9 @@ namespace TSPMD
 			// aapt resource value: 0x7f0700a2
 			public const int buttonRowPlay_ = 2131165346;
 			
+			// aapt resource value: 0x7f0700cf
+			public const int buttonSave = 2131165391;
+			
 			// aapt resource value: 0x7f0700c2
 			public const int buttonSearch = 2131165378;
 			
@@ -2579,6 +2585,9 @@ namespace TSPMD
 			
 			// aapt resource value: 0x7f0700c1
 			public const int editTextSearch = 2131165377;
+			
+			// aapt resource value: 0x7f0700ce
+			public const int editTextSearchPages = 2131165390;
 			
 			// aapt resource value: 0x7f07007d
 			public const int edit_query = 2131165309;
@@ -2688,14 +2697,14 @@ namespace TSPMD
 			// aapt resource value: 0x7f07008b
 			public const int main_link = 2131165323;
 			
-			// aapt resource value: 0x7f0700cf
-			public const int masked = 2131165391;
+			// aapt resource value: 0x7f0700d2
+			public const int masked = 2131165394;
 			
 			// aapt resource value: 0x7f0700ae
 			public const int media_actions = 2131165358;
 			
-			// aapt resource value: 0x7f0700cd
-			public const int message = 2131165389;
+			// aapt resource value: 0x7f0700d0
+			public const int message = 2131165392;
 			
 			// aapt resource value: 0x7f070030
 			public const int middle = 2131165232;
@@ -2709,14 +2718,17 @@ namespace TSPMD
 			// aapt resource value: 0x7f07009a
 			public const int musicView = 2131165338;
 			
-			// aapt resource value: 0x7f0700d2
-			public const int nav_about = 2131165394;
+			// aapt resource value: 0x7f0700d6
+			public const int nav_about = 2131165398;
 			
-			// aapt resource value: 0x7f0700d1
-			public const int nav_files = 2131165393;
+			// aapt resource value: 0x7f0700d4
+			public const int nav_files = 2131165396;
 			
-			// aapt resource value: 0x7f0700d0
-			public const int nav_search = 2131165392;
+			// aapt resource value: 0x7f0700d3
+			public const int nav_search = 2131165395;
+			
+			// aapt resource value: 0x7f0700d5
+			public const int nav_settings = 2131165397;
 			
 			// aapt resource value: 0x7f0700a7
 			public const int nav_view = 2131165351;
@@ -2934,6 +2946,9 @@ namespace TSPMD
 			// aapt resource value: 0x7f07009f
 			public const int textViewRow_ = 2131165343;
 			
+			// aapt resource value: 0x7f0700cd
+			public const int textViewSearchPages = 2131165389;
+			
 			// aapt resource value: 0x7f070099
 			public const int text_input_password_toggle = 2131165337;
 			
@@ -2994,8 +3009,8 @@ namespace TSPMD
 			// aapt resource value: 0x7f070016
 			public const int view_offset_helper = 2131165206;
 			
-			// aapt resource value: 0x7f0700ce
-			public const int visible = 2131165390;
+			// aapt resource value: 0x7f0700d1
+			public const int visible = 2131165393;
 			
 			// aapt resource value: 0x7f07003b
 			public const int withText = 2131165243;
@@ -3261,10 +3276,13 @@ namespace TSPMD
 			public const int select_dialog_singlechoice_material = 2130903106;
 			
 			// aapt resource value: 0x7f030043
-			public const int support_simple_spinner_dropdown_item = 2130903107;
+			public const int Settings = 2130903107;
 			
 			// aapt resource value: 0x7f030044
-			public const int tooltip = 2130903108;
+			public const int support_simple_spinner_dropdown_item = 2130903108;
+			
+			// aapt resource value: 0x7f030045
+			public const int tooltip = 2130903109;
 			
 			static Layout()
 			{

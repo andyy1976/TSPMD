@@ -11,14 +11,14 @@
         android:layout_height="match_parent"
         android:visibility="visible"
         app:dlv_item_drawable="@drawable/circle_background"
-        app:dlv_line_color="@color/point_color"/>
+        app:dlv_line_color="@color/point_color" />
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-		android:layout_marginTop="110dp"
-		android:layout_marginLeft="5dp" 
-		android:layout_marginRight="5dp" 
+        android:layout_marginTop="110dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:prompt="@string/tubes_prompt" />
     <EditText
         android:layout_width="match_parent"
@@ -28,8 +28,8 @@
         android:layout_alignParentLeft="true"
         android:layout_marginTop="60dp"
         android:layout_marginRight="90dp"
-        android:layout_marginLeft="5dp" 
-		android:hint="Artist, title or album"/>
+        android:layout_marginLeft="5dp"
+        android:hint="Artist, title or album" />
     <Button
         android:text="Search"
         android:layout_width="80dp"

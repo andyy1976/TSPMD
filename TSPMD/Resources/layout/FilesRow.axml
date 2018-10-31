@@ -23,7 +23,7 @@
         android:id="@+id/textViewDuration_"
         android:textColor="#ff05659f"
         android:textStyle="bold" />
-	<TextView
+    <TextView
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
