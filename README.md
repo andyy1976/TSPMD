@@ -8,6 +8,18 @@ The Simple Pocket Media Downloader aka. **TSPMD** is an audio and video download
 
 Select the tube from the drop-down list and enter either the artist, the title or the album name in the search box. After clicking on the search button you will see the relevant results.
 
+The app includes a lightweight audio and video player. It is designed only for previewing the media files. Please use a full-fledged media player like [VLC](https://play.google.com/store/apps/details?id=org.videolan.vlc) for playing.
+
+# Currently supported tubes
+
+* YouTube
+* ccMixter
+* Dailymotion
+* Eroprofile
+* Pornhub
+* Vimeo
+* xHamster
+
 # Supported android versions
 
 * Lollipop (5.0)
