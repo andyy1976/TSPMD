@@ -43,7 +43,7 @@ The files are downloaded to the **download folder** on your android device.
 
 # Support
 
-[Join our support channel on slack](https://tspmd.slack.com/messages/CDSDC00LU)
+[Join our support channel on slack](https://tspmd.slack.com/messages/CDSDC00LU). In order to be able to help you quickly please send us the **logfile**. This is located in the **documents folder** on your android device.
 
 # Contribute
 
