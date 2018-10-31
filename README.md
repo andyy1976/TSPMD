@@ -39,7 +39,7 @@ The files are downloaded to the **download folder** on your android device.
 ![picture alt](https://github.com/mrklintscher/TSPMD/blob/master/Screenshots/Screenshot_3_github.jpg) ![picture alt](https://github.com/mrklintscher/TSPMD/blob/master/Screenshots/Screenshot_4_github.jpg)
 ![picture alt](https://github.com/mrklintscher/TSPMD/blob/master/Screenshots/Screenshot_5_github.jpg)
 
-<img src="https://github.com/mrklintscher/TSPMD/blob/master/Resources/slack.png" width="150" align="right">
+<img src="https://github.com/mrklintscher/TSPMD/blob/master/Resources/slack.png" width="80" align="right">
 
 # Support
 
@@ -53,7 +53,7 @@ We appreciate any developer, desinger or other helpers who would like to support
 
 TSPMD is fully written in **C#**.
 
-<img src="https://github.com/mrklintscher/TSPMD/blob/master/Resources/Visual_Studio_2017.png" width="150" align="right">
+<img src="https://github.com/mrklintscher/TSPMD/blob/master/Resources/Visual_Studio_2017.png" width="80" align="right">
 
 # Build
 
