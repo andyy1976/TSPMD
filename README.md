@@ -31,7 +31,7 @@ The files are downloaded to the **download folder** on your android device.
 
 # Download latest version
 
-[APK](https://github.com/mrklintscher/TSPMD/blob/master/apk/0.1/com.tspmd.android.apk)
+[APK](http://tspmd.blogspot.com/)
 
 # Screenshots
 
