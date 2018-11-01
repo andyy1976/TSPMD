@@ -42,7 +42,7 @@ namespace TSPMD
     public class FilesFragment : Fragment, SeekBar.IOnSeekBarChangeListener
     {
         private List<ListViewItem> items = null;
-        private ListView listView;
+        public ListView listView;
         FilesListViewAdapter adapter;
         public TextView textView;
         public SeekBar seekBar;
@@ -53,16 +53,25 @@ namespace TSPMD
 
         View view;
 
+        ViewGroup container;
+        LayoutInflater inflater;
+
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             /* UI */
 
             var view = inflater.Inflate(Resource.Layout.Files, container, false);
 
+            this.inflater = inflater;
+            this.container = container;
+
             this.view = view;
 
             // Get layout resources and attach an event to it
             listView = view.FindViewById<ListView>(Resource.Id.listViewResult_);
+            listView.ChoiceMode = ChoiceMode.Single;
+            listView.ItemLongClick += new EventHandler<AdapterView.ItemLongClickEventArgs>(ItemLong_OnClick);
+
             textView = view.FindViewById<TextView>(Resource.Id.textViewPlaying_);
             seekBar = view.FindViewById<SeekBar>(Resource.Id.seekBarPlayer_);
             Button buttonStop = view.FindViewById<Button>(Resource.Id.buttonStop_);
@@ -152,6 +161,47 @@ namespace TSPMD
             seekBar.SetOnSeekBarChangeListener(this);
 
             return view;
+        }
+
+        private void ItemLong_OnClick(object sender_, AdapterView.ItemLongClickEventArgs e_)
+        {
+            var item = items[e_.Position];
+
+            var itemFileName = item.Title.Split('|');
+
+            var view = inflater.Inflate(Resource.Layout.FilesDialog, container, false);
+
+            var edittext = view.FindViewById<EditText>(Resource.Id.filesDialogedittext);
+            edittext.Text = itemFileName[0];
+
+            ActivityContext.mActivity.RunOnUiThread(delegate
+            {
+                new Android.Support.V7.App.AlertDialog.Builder(ActivityContext.mActivity)
+                                       .SetPositiveButton("Save", (sender, e) =>
+                                       {
+                                           try
+                                           {
+                                               System.IO.File.Move(item.Url, item.Url.Replace(itemFileName[0], edittext.Text));
+
+                                               ActivityContext.mActivity.RunOnUiThread(() => loadAsync());
+                                           }
+                                           catch (Exception ex)
+                                           {
+                                               Log.println(ex.ToString());
+
+                                               ActivityContext.mActivity.RunOnUiThread(() =>
+                                               Toast.MakeText(ActivityContext.mActivity, "Error! Can't rename file.", ToastLength.Long).Show());
+                                           }
+                                       })
+                                       .SetNegativeButton("Cancel", (sender, e) =>
+                                       {
+                                           // Do nothing
+                                       })
+                                       .SetTitle("Rename")
+                                       .SetIcon(Resource.Drawable.Icon)
+                                       .SetView(view)
+                                       .Show();
+            });
         }
 
         public async void loadAsync()

@@ -389,6 +389,8 @@ namespace TSPMD
                 Console.WriteLine(ex.ToString());
 #endif
                 Toast.MakeText(ActivityContext.mActivity, "Parsing error", ToastLength.Long).Show();
+
+                Log.println(ex.ToString());
             }
         }
 
