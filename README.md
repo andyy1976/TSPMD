@@ -37,7 +37,7 @@ The files are downloaded to the **download folder** on your android device.
 
 ![picture alt](https://github.com/mrklintscher/TSPMD/blob/master/Screenshots/Screenshot_1_github.jpg) ![picture alt](https://github.com/mrklintscher/TSPMD/blob/master/Screenshots/Screenshot_2_github.jpg)
 ![picture alt](https://github.com/mrklintscher/TSPMD/blob/master/Screenshots/Screenshot_3_github.jpg) ![picture alt](https://github.com/mrklintscher/TSPMD/blob/master/Screenshots/Screenshot_4_github.jpg)
-![picture alt](https://github.com/mrklintscher/TSPMD/blob/master/Screenshots/Screenshot_5_github.jpg)
+![picture alt](https://github.com/mrklintscher/TSPMD/blob/master/Screenshots/Screenshot_5_github.jpg) ![picture alt](https://github.com/mrklintscher/TSPMD/blob/master/Screenshots/Screenshot_6_github.jpg)
 
 <img src="https://github.com/mrklintscher/TSPMD/blob/master/Resources/slack.png" width="80" align="right">
 
