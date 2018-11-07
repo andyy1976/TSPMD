@@ -70,15 +70,15 @@ namespace TSPMD
                 try
                 {
                     decrypted = GetDecipheredSignature(videoInfo.HtmlPlayerVersion, encryptedSignature);
+
+                    videoInfo.DownloadUrl = HttpHelper.ReplaceQueryStringParameter(videoInfo.DownloadUrl, SignatureQuery, decrypted);
+                    videoInfo.RequiresDecryption = false;
                 }
 
                 catch (Exception ex)
                 {
-                    throw new YoutubeParseException("Could not decipher signature", ex);
+                    Log.println("Could not decipher signature. " +  ex);
                 }
-
-                videoInfo.DownloadUrl = HttpHelper.ReplaceQueryStringParameter(videoInfo.DownloadUrl, SignatureQuery, decrypted);
-                videoInfo.RequiresDecryption = false;
             }
         }
 
@@ -114,6 +114,8 @@ namespace TSPMD
             if (!isYoutubeUrl)
             {
                 Log.println("URL is not a valid youtube URL!");
+
+                return null;
             }
 
             try
@@ -258,11 +260,20 @@ namespace TSPMD
 
         private static string GetHtml5PlayerVersion(JObject json)
         {
-            var regex = new Regex(@"player-(.+?).js");
+            try
+            {
+                var regex = new Regex(@"player-(.+?).js");
 
-            string js = json["assets"]["js"].ToString();
+                string js = json["assets"]["js"].ToString();
 
-            return regex.Match(js).Result("$1");
+                return regex.Match(js).Result("$1");
+            }
+            catch (Exception ex)
+            {
+                Log.println(ex.ToString());
+
+                return string.Empty;
+            }
         }
 
         private static string GetStreamMap(JObject json)
