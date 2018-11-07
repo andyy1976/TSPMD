@@ -113,7 +113,7 @@ namespace TSPMD
 
             if (!isYoutubeUrl)
             {
-                throw new ArgumentException("URL is not a valid youtube URL!");
+                Log.println("URL is not a valid youtube URL!");
             }
 
             try
@@ -143,12 +143,7 @@ namespace TSPMD
 
             catch (Exception ex)
             {
-                if (ex is WebException || ex is VideoNotAvailableException)
-                {
-                    throw;
-                }
-
-                ThrowYoutubeParseException(ex, videoUrl);
+                Log.println(ex + " " + videoUrl);
             }
 
             return null; // Will never happen, but the compiler requires it
@@ -278,7 +273,7 @@ namespace TSPMD
 
             if (streamMapString == null || streamMapString.Contains("been+removed"))
             {
-                throw new VideoNotAvailableException("Video is removed or has an age restriction.");
+                Log.println("Video is removed or has an age restriction.");
             }
 
             return streamMapString;
@@ -340,7 +335,7 @@ namespace TSPMD
 
             if (IsVideoUnavailable(pageSource))
             {
-                throw new VideoNotAvailableException();
+                return null;
             }
 
             var dataRegex = new Regex(@"ytplayer\.config\s*=\s*(\{.+?\});", RegexOptions.Multiline);
@@ -352,7 +347,7 @@ namespace TSPMD
 
         private static void ThrowYoutubeParseException(Exception innerException, string videoUrl)
         {
-           Console.WriteLine("Could not parse the Youtube page for URL " + videoUrl + "\n" +
+            Log.println("Could not parse the Youtube page for URL " + videoUrl + "\n" +
                                             "This may be due to a change of the Youtube page structure.\n" +
                                             "Please report this bug at www.github.com/flagbug/YoutubeExtractor/issues" + innerException);
         }

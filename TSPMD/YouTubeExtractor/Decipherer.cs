@@ -137,7 +137,7 @@ namespace TSPMD
                     }
 
                 default:
-                    Console.WriteLine("Couldn't find cipher operation.");
+                    Log.println("Couldn't find cipher operation.");
                     return "Couldn't find cipher operation.";
             }
         }
