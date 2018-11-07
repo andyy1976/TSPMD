@@ -352,9 +352,9 @@ namespace TSPMD
 
         private static void ThrowYoutubeParseException(Exception innerException, string videoUrl)
         {
-            throw new YoutubeParseException("Could not parse the Youtube page for URL " + videoUrl + "\n" +
+           Console.WriteLine("Could not parse the Youtube page for URL " + videoUrl + "\n" +
                                             "This may be due to a change of the Youtube page structure.\n" +
-                                            "Please report this bug at www.github.com/flagbug/YoutubeExtractor/issues", innerException);
+                                            "Please report this bug at www.github.com/flagbug/YoutubeExtractor/issues" + innerException);
         }
 
         private class ExtractionInfo

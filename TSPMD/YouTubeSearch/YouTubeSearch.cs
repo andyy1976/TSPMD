@@ -64,11 +64,17 @@ namespace TSPMD
                     // Author
                     author = Helper.ExtractValue(result[ctr].Value, "/user/", "class").Replace('"', ' ').TrimStart().TrimEnd();
 
+                    if (string.IsNullOrEmpty(author))
+                        author = Helper.ExtractValue(result[ctr].Value, " >", "</a>");
+
                     if (Log.getMode())
                         Log.println("Author: " + author);
 
                     // Description
                     description = Helper.ExtractValue(result[ctr].Value, "dir=\"ltr\" class=\"yt-uix-redirect-link\">", "</div>");
+
+                    if (string.IsNullOrEmpty(description))
+                        description = Helper.ExtractValue(result[ctr].Value, "<div class=\"yt-lockup-description yt-ui-ellipsis yt-ui-ellipsis-2\" dir=\"ltr\">", "</div>");
 
                     if (Log.getMode())
                         Log.println("Description: " + description);

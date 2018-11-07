@@ -137,7 +137,8 @@ namespace TSPMD
                     }
 
                 default:
-                    throw new NotImplementedException("Couldn't find cipher operation.");
+                    Console.WriteLine("Couldn't find cipher operation.");
+                    return "Couldn't find cipher operation.";
             }
         }
 
