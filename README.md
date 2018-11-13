@@ -62,3 +62,7 @@ TSPMD is fully written in **C#**.
 # Build
 
 To build TSPMD by yourself you need Visual Studio [15.6.7](https://aka.ms/eac464). In the last version of Visual Studio there is a bug which does not handle the submission of the download process correctly and thus the downloaded files are broken. You can follow the issue [here](https://github.com/mono/mono/issues/9808).
+
+# Forum
+
+Visit [xdadevelopers] (https://forum.xda-developers.com/android/apps-games/5-0-tspmd-simple-pocket-media-downloader-t3866543).
