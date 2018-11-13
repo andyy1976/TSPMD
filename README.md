@@ -65,4 +65,4 @@ To build TSPMD by yourself you need Visual Studio [15.6.7](https://aka.ms/eac464
 
 # Forum
 
-Visit [xdadevelopers] (https://forum.xda-developers.com/android/apps-games/5-0-tspmd-simple-pocket-media-downloader-t3866543).
+Visit [xdadevelopers](https://forum.xda-developers.com/android/apps-games/5-0-tspmd-simple-pocket-media-downloader-t3866543) to access our forum thread.
