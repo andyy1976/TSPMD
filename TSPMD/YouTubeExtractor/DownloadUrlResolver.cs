@@ -262,7 +262,7 @@ namespace TSPMD
         {
             try
             {
-                var regex = new Regex(@"player-(.+?).js");
+                var regex = new Regex(@"player(.+?).js");
 
                 string js = json["assets"]["js"].ToString();
 
